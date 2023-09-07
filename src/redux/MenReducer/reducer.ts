@@ -1,13 +1,7 @@
 
-import { createSlice } from '@reduxjs/toolkit';
-import axios from "axios";
-import {
-  MEN_REQUEST_FAILURE,
-  MEN_REQUEST_PENDING,
-  MEN_REQUEST_SUCCESS,
-  WOMEN_REQUEST_SUCCESS,
-} from "./actionType";
-
+import { AnyAction, Dispatch, createSlice } from '@reduxjs/toolkit';
+import axios, { AxiosRequestConfig } from "axios";
+import userProduct from '@/apis/userProduct';
 const menSlice = createSlice({
   name: "men",
   initialState: {
@@ -23,6 +17,7 @@ const menSlice = createSlice({
       state.isError = false;
     },
     getMenRequestSuccess: (state, { payload }) => {
+      console.log("payload.data",payload.data);
       state.isLoading = false;
       state.isError = false;
       state.total = payload.total;
@@ -48,47 +43,45 @@ export const {
   getWomenRequestSuccess,
 } = menSlice.actions;
 
-export const fetchMensData = (paramObj) => async (dispatch) => {
-  dispatch(getMenRequestPending());
-  
+export const fetchMensData =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
+  async function  fetchmen1() {
+  // dispatch(getMenRequestPending());
   try {
-    const res = await axios.get(
-      process.env.REACT_APP_HOST + `men?_limit=12`,
-      paramObj
-    );
-    
-    const obj = {
-      data: res.data,
-      total: res.headers.get("X-Total-Count"),
-    };
-    
-    dispatch(getMenRequestSuccess(obj));
+    const res = userProduct.getMenproduct("");
+    dispatch(getMenRequestSuccess(res));
     
   } catch (error) {
     dispatch(getMenRequestFailure());
   }
 };
+fetchmen1();
+}
 
-export const fetchWomensData = (paramObj) => async (dispatch) => {
-  dispatch(getMenRequestPending());
+
+
+
+// export const fetchWomensData = (paramObj) => async (dispatch) => {
+//   dispatch(getMenRequestPending());
   
-  try {
-    const res = await axios.get(
-      process.env.REACT_APP_HOST + `women?_limit=12`,
-      paramObj
-    );
+//   try {
+//     const res = await axios.get(
+//       process.env.REACT_APP_HOST + `women?_limit=12`,
+//       paramObj
+//     );
     
-    const obj = {
-      data: res.data,
-      total: res.headers.get("X-Total-Count"),
-    };
+//     const obj = {
+//       data: res.data,
+//       total: res.headers.get("X-Total-Count"),
+//     };
     
-    dispatch(getWomenRequestSuccess(obj));
+//     dispatch(getWomenRequestSuccess(obj));
     
-  } catch (error) {
-    dispatch(getMenRequestFailure());
-  }
-};
+//   } catch (error) {
+//     dispatch(getMenRequestFailure());
+//   }
+// };
+
+
 
 export default menSlice.reducer;
 

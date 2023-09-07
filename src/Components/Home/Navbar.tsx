@@ -87,7 +87,7 @@ const Navbar = () => {
           <SideBar />
         </Box>
 
-        <a href="/">
+        <Link to="/">
           <Box minW={"6rem"}>
             <Image
               src={Logo}
@@ -97,7 +97,7 @@ const Navbar = () => {
               height={{ base: "2rem", md: "100%" }}
             />
           </Box>
-        </a>
+        </Link>
 
         <Box
           minWidth={"30%"}

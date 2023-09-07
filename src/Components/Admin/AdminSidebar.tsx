@@ -25,12 +25,12 @@ function AdminSidebar() {
       <ul className="SidebarList">
         {sidebarData.map((el, id) => {
           return (
-            <a href={el.link} key={id}>
+            <Link to={el.link} key={id}>
               <li className="row">
                 <div className="icon">{el.icon}</div>
                 <div className="title">{el.title}</div>
               </li>
-            </a>
+            </Link>
           );
         })}
       </ul>

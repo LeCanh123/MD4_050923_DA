@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
 // import { getmens } from "../redux/MenReducer/action";
-import { fetchMensData } from "../redux/MenReducer/reducer";
 
 
 import { Box, Grid, Progress, Spinner, Text } from "@chakra-ui/react";
@@ -15,12 +14,29 @@ import Menfilter from "../Components/Filter/Menfilter";
 import { getMenRequestSuccess } from "../redux/MenReducer/reducer";
 import apis from "../apis";
 
+//lấy data men
+import { fetchMensData } from "../redux/MenReducer/reducer";
+
 export const Men = () => {
 //   const [isPageRedirected, setPageRedirected] = useState(false);
 //   let [paginatedProducts,setpaginatedProducts] =useState([]);
 //   const [searchParams] = useSearchParams();
 //   const location = useLocation();
-//   const dispatch = useDispatch();
+
+
+//lấy data men
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    let menproduct=fetchMensData("",dispatch);
+    console.log(menproduct);
+  }, []);
+    const { men } = useSelector((store:any) => {
+    return store.MenReducer;
+  });
+console.log(men);
+
+
+  
 
 //   const { men, isLoading, isError, total } = useSelector((store) => {
 //     return store.MenReducer;
@@ -59,7 +75,8 @@ export const Men = () => {
 //     }))
 //     }
 //   }, []);
-let getPaginatedProducts =[{id:1},{id:2}]
+// let getPaginatedProducts =[{id:1},{id:2}]
+let getPaginatedProducts =men
   return (
     <div>
       <Navbar />
