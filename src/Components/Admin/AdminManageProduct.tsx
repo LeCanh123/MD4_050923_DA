@@ -10,19 +10,7 @@ import "./AdminManageProduct.css";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "react-icons/md";
 
-const sidebarData = [
-  {
-    title: "Products",
-    icon: <MdOutlineProductionQuantityLimits />,
-    link: "/products",
-  },
-  {
-    title: "Add Product",
-    icon: <MdOutlineAddCircleOutline />,
-    link: "/manageProduct",
-  },
-  { title: "Manage Users", icon: <BsGraphUpArrow />, link: "/users" },
-];
+
 
 
   const initailState = {
@@ -184,6 +172,7 @@ const sidebarData = [
       // e.preventDefault()
       const sex:any = (document.getElementById('categoryType1')as HTMLInputElement).value;
       const name:any = (document.getElementById('categoryName1')as HTMLInputElement).value;
+      setIsLoading(true)
       let addCategoryResult:any=await apiAdminProduct.addCategory({name,sex});
       if(addCategoryResult.data?.status){
         setReloadCategory(Math.random()*1000);
@@ -195,6 +184,7 @@ const sidebarData = [
           isClosable: true,
           position: "top",
         });
+        setIsLoading(false)
       }else{
         toast({
           title: "Err",
@@ -204,6 +194,7 @@ const sidebarData = [
           isClosable: true,
           position: "top",
         });
+        setIsLoading(false)
       }
       
     }
@@ -212,6 +203,7 @@ const sidebarData = [
               setDeleteCategoryId(Number(event.target.value));};
     const handleDeleteCategory =async (e:any) => {
               // e.preventDefault();
+              setIsLoading(true)
               let deleteCategoryResult:any=await apiAdminProduct.deleteCategory(localStorage.getItem("loginToken1"),deleteCategoryId);
               if(deleteCategoryResult.data?.status){
                 toast({
@@ -222,6 +214,7 @@ const sidebarData = [
                   isClosable: true,
                   position: "top",
                 });
+                setIsLoading(false)
               }else{
                 toast({
                   title: "Err",
@@ -231,35 +224,49 @@ const sidebarData = [
                   isClosable: true,
                   position: "top",
                 });
+                setIsLoading(false)
               }
               
               setReloadCategory(Math.random()*1000);
     }
 
+    //change component
+    let   [component1,setComponent1]=useState(true)
+    let   [component2,setComponent2]=useState(false)
+    let   [component3,setComponent3]=useState(false)
+    console.log("component1",component1);
+    console.log("component2",component2);
+    
+    function changecomponent(e:any){
+      if(e==1){setComponent1(true);setComponent2(false);setComponent3(false);}
+      if(e==2){setComponent2(true);setComponent1(false);setComponent3(false);}
+      if(e==3){setComponent1(false);setComponent2(false);setComponent3(true);}
+
+    }
     return (
       !isLoading?
       <>
-       <div className="AdminSideBar">
-      <ul className="SidebarList">
+       <div className="AdminSideBar" >
+      <ul className="SidebarList" style={{zIndex:10}}>
     
-            <div  key={id}>
-              <li className="row">
-                <div className="icon">{<MdOutlineProductionQuantityLimits />}</div>
-                <div className="title">{"el.title"}</div>
+            <div  key={1} onClick={()=>changecomponent(1)} style={{backgroundColor:"red"}}>
+              <li className="row" >
+                <div className="icon" style={{position:"relative",top:"0px"}}>{<MdOutlineProductionQuantityLimits />}</div>
+                <div className="title" >{"Manage Category"}</div>
               </li>
             </div>
 
-            <div  key={id}>
-              <li className="row">
-                <div className="icon">{<MdOutlineAddCircleOutline />}</div>
-                <div className="title">{"el.title"}</div>
+            <div  key={2} onClick={()=>changecomponent(2)}>
+              <li className="row" >
+                <div className="icon" style={{position:"relative",top:"0px"}}>{<MdOutlineAddCircleOutline />}</div>
+                <div className="title" onClick={()=>changecomponent(2)}>{"Add Product"}</div>
               </li>
             </div>
 
-            <div  key={id}>
-              <li className="row">
+            <div  key={3} onClick={()=>changecomponent(3)} style={{display:"none"}}>
+              <li className="row" >
                 <div className="icon">{<BsGraphUpArrow />}</div>
-                <div className="title">{"el.title"}</div>
+                <div className="title">{"Add Product"}</div>
               </li>
             </div>
     
@@ -268,190 +275,200 @@ const sidebarData = [
 
     
       <AdminNavbar></AdminNavbar>
-      <div className="row d-flex justify-content-center">
-        <div className="col-12 col-md-5">
+     
+      <div className="row d-flex justify-content-center" style={{width:"80%",marginLeft:"15%",top:"50px",position:"relative"}}>
+      {component1?
+          <div className="col-12 col-md-12">
         
-      <FormControl
-        // encType="multipart/form-data"
-        onSubmit={e=>{
-          e.preventDefault();
-          handleAddCategory("")}}
-        width="80%"
-        h={"auto"}
-        m="auto"
-        border={"1px solid gainsboro"}
-        mt={"20px"}
-        mb={"20px"}
-        gap={"20px"}
-        bg={"#f7f8f7"}
-        style={{padding:"10px"}}
-      >
-        <div style={{backgroundColor:"#FFCCFF",fontSize:"20px",color:"black"}}>Add Category</div>
-        <form encType="multipart/form-data">
-
-        <FormLabel mt={"12px"}>Type (man,women...)</FormLabel>
-        <Input
-          type="text"
-          id="categoryType1"
-        />
-
-        <FormLabel mt={"12px"}>Category Name</FormLabel>
-        <Input
-          type="text"
-          id="categoryName1"
-        />
-
-        {/* <Input type="submit"/> */}
-        <Button ml={"155px"} mt={"20px"} bg={"skyblue"} type="submit" style={{margin:"auto"}}>
-          Add Category
-        </Button>
-        </form>
-        
-      </FormControl>
-
-      <FormControl
-        onSubmit={e=>{
-          e.preventDefault();
-          handleDeleteCategory("")}}
-        width="80%"
-        h={"auto"}
-        m="auto"
-        border={"1px solid gainsboro"}
-        mt={"100px"}
-        mb={"20px"}
-        gap={"20px"}
-        bg={"#f7f8f7"}
-        style={{padding:"10px"}}
-
-      >
-        <div style={{backgroundColor:"#FFCCFF",fontSize:"20px",color:"black"}}>Delete Category</div>
-        <form encType="multipart/form-data">
-        
-        <Select
-          // placeholder="Select Catergory"
-          onChange={e=>handleChangedeleteId(e)}
-          style={{marginTop:"30px"}}
-          // defaultValue={-1}
-        >
-        {listdeleteCategory.map(item => (
-            <option key={item.id} value={item.id}>{item.name}</option>
-          ))}
-        </Select>
-
-      
-
-
-
-        {/* <Input type="submit"/> */}
-        <Button ml={"155px"} mt={"20px"} bg={"skyblue"} type="submit" style={{margin:"auto",marginTop:"10"}}>
-          Delete Category
-        </Button>
-        </form>
-        
-      </FormControl>
-        </div>
-        <div className="col-12 col-md-5">
-      <FormControl
-        // encType="multipart/form-data"
-        // onSubmit={handleAddProduct}
-        width="80%"
-        h={"auto"}
-        m="auto"
-        border={"1px solid gainsboro"}
-        mt={"20px"}
-        mb={"20px"}
-        gap={"20px"}
-        bg={"#f7f8f7"}
-        style={{padding:"10px"}}
-
-      >
-        <div style={{backgroundColor:"#FFCCFF",fontSize:"20px",color:"black"}}>Add Product</div>
-        <form 
-        encType="multipart/form-data"
-        onSubmit={e=>{
-          e.preventDefault();
-          handleAddProduct("")}}
-        >
-        <FormLabel mt={"12px"}>Image</FormLabel>
-        <Input
-          type="file"
-          id="image00"
-        />
-        <FormLabel mt={"12px"}>Image1</FormLabel>
-        <Input
-          type="file"
-          id="img1"
-        />
-
-        <FormLabel mt={"12px"}>Image2</FormLabel>
-        <Input
-          type="file"
-          id="img2"
-        />
-
-        <FormLabel mt={"12px"}>Image3</FormLabel>
-        <Input
-            type="file"
-            id="img3"
-        />
-
-        <FormLabel mt={"12px"}>Image4</FormLabel>
-        <Input
+          <FormControl
+            // encType="multipart/form-data"
+            onSubmit={e=>{
+              e.preventDefault();
+              handleAddCategory("")}}
+            width="80%"
+            h={"auto"}
+            m="auto"
+            border={"1px solid gainsboro"}
+            mt={"20px"}
+            mb={"20px"}
+            gap={"20px"}
+            bg={"#f7f8f7"}
+            style={{padding:"10px"}}
+          >
+            <div style={{backgroundColor:"#FFCCFF",fontSize:"20px",color:"black"}}>Add Category</div>
+            <form encType="multipart/form-data">
+    
+            <FormLabel mt={"12px"}>Type (man,women...)</FormLabel>
+            <Input
+              type="text"
+              id="categoryType1"
+            />
+    
+            <FormLabel mt={"12px"}>Category Name</FormLabel>
+            <Input
+              type="text"
+              id="categoryName1"
+            />
+    
+            {/* <Input type="submit"/> */}
+            <Button ml={"155px"} mt={"20px"} bg={"skyblue"} type="submit" style={{margin:"auto"}}>
+              Add Category
+            </Button>
+            </form>
+            
+          </FormControl>
+    
+          <FormControl
+            onSubmit={e=>{
+              e.preventDefault();
+              handleDeleteCategory("")}}
+            width="80%"
+            h={"auto"}
+            m="auto"
+            border={"1px solid gainsboro"}
+            mt={"100px"}
+            mb={"20px"}
+            gap={"20px"}
+            bg={"#f7f8f7"}
+            style={{padding:"10px"}}
+    
+          >
+            <div style={{backgroundColor:"#FFCCFF",fontSize:"20px",color:"black"}}>Delete Category</div>
+            <form encType="multipart/form-data">
+            
+            <Select
+              // placeholder="Select Catergory"
+              onChange={e=>handleChangedeleteId(e)}
+              style={{marginTop:"30px"}}
+              // defaultValue={-1}
+            >
+            {listdeleteCategory.map(item => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              ))}
+            </Select>
+    
+          
+    
+    
+    
+            {/* <Input type="submit"/> */}
+            <Button ml={"155px"} mt={"20px"} bg={"skyblue"} type="submit" style={{margin:"auto",marginTop:"10"}}>
+              Delete Category
+            </Button>
+            </form>
+            
+          </FormControl>
+          </div>
+          :
+          <></>  
+    }
+    {component2?
+          <div className="col-12 col-md-12" >
+          <FormControl
+            // encType="multipart/form-data"
+            // onSubmit={handleAddProduct}
+            width="80%"
+            h={"auto"}
+            m="auto"
+            border={"1px solid gainsboro"}
+            mt={"20px"}
+            mb={"20px"}
+            gap={"20px"}
+            bg={"#f7f8f7"}
+            style={{padding:"10px"}}
+    
+          >
+            <div style={{backgroundColor:"#FFCCFF",fontSize:"20px",color:"black"}}>Add Product</div>
+            <form 
+            encType="multipart/form-data"
+            onSubmit={e=>{
+              e.preventDefault();
+              handleAddProduct("")}}
+            >
+            <FormLabel mt={"12px"}>Image</FormLabel>
+            <Input
               type="file"
-              id="img4"
-        />
+              id="image00"
+            />
+            <FormLabel mt={"12px"}>Image1</FormLabel>
+            <Input
+              type="file"
+              id="img1"
+            />
+    
+            <FormLabel mt={"12px"}>Image2</FormLabel>
+            <Input
+              type="file"
+              id="img2"
+            />
+    
+            <FormLabel mt={"12px"}>Image3</FormLabel>
+            <Input
+                type="file"
+                id="img3"
+            />
+    
+            <FormLabel mt={"12px"}>Image4</FormLabel>
+            <Input
+                  type="file"
+                  id="img4"
+            />
+    
+            <FormLabel mt={"12px"}>Price</FormLabel>
+            <Input
+              type="number"
+              id="price"
+            />
+    
+            <FormLabel mt={"12px"}>Actual Price</FormLabel>
+            <Input
+              type="number"
+              id="actualPrice"
+            />
+    
+            <FormLabel mt={"12px"}>Title</FormLabel>
+            <Input
+              type="text"
+              id="title"
+            />
+    
+          <FormLabel mt={"12px"}>Gender</FormLabel>
+          <Select
+            name="gender"
+            id="gender"
+            placeholder="Select Gender"
+            onChange={(e) => handleChangeGender(e)}
+          >
+            {Object.keys(productCategory1).map(category => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </Select>
+          <FormLabel mt={"12px"} mb={"10px"}>
+            Category
+          </FormLabel>
+          <Select
+            placeholder="Select Category"
+            onChange={handleChangeCategoryId}
+          >
+            {productCategory1[selectedSex]?productCategory1[selectedSex].map((item: { id: number; name: string }) => (
+              <option key={item.id} value={item.id}>{item.name}</option>
+            )):
+            <option key={"none"} value={"none"}>{"none"}</option>
+            }
+          </Select>
+    
+            {/* <Input type="submit"/> */}
+            <Button ml={"155px"} mt={"20px"} bg={"skyblue"}  style={{margin:"auto"}} type="submit"> 
+              Add Product
+            </Button>
+            </form>
+            
+          </FormControl>
+            </div>
+            :
+            <></>  
+    }
 
-        <FormLabel mt={"12px"}>Price</FormLabel>
-        <Input
-          type="number"
-          id="price"
-        />
-
-        <FormLabel mt={"12px"}>Actual Price</FormLabel>
-        <Input
-          type="number"
-          id="actualPrice"
-        />
-
-        <FormLabel mt={"12px"}>Title</FormLabel>
-        <Input
-          type="text"
-          id="title"
-        />
-
-      <FormLabel mt={"12px"}>Gender</FormLabel>
-      <Select
-        name="gender"
-        id="gender"
-        placeholder="Select Gender"
-        onChange={(e) => handleChangeGender(e)}
-      >
-        {Object.keys(productCategory1).map(category => (
-          <option key={category} value={category}>{category}</option>
-        ))}
-      </Select>
-      <FormLabel mt={"12px"} mb={"10px"}>
-        Category
-      </FormLabel>
-      <Select
-        placeholder="Select Category"
-        onChange={handleChangeCategoryId}
-      >
-        {productCategory1[selectedSex]?productCategory1[selectedSex].map((item: { id: number; name: string }) => (
-          <option key={item.id} value={item.id}>{item.name}</option>
-        )):
-        <option key={"none"} value={"none"}>{"none"}</option>
-        }
-      </Select>
-
-        {/* <Input type="submit"/> */}
-        <Button ml={"155px"} mt={"20px"} bg={"skyblue"}  style={{margin:"auto"}} type="submit"> 
-          Add Product
-        </Button>
-        </form>
-        
-      </FormControl>
-        </div>
       </div>
       </>
       

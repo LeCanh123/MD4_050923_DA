@@ -2,13 +2,14 @@ import "./../CSS/userinfor.css"
 import { useEffect, useState } from 'react';
 import apis from "@/apis";
 import {useToast} from "@chakra-ui/react";
-
+import Loading from "@loading/Loading"
 
 
 
 
 
 export default function UserInfo() {
+  let [isLoading,setIsLoading]=useState(false);
   const toast = useToast();
   const [Username,setUserName]=useState("User Name");
   const [email,setemail]=useState("demo@123.com");
@@ -45,6 +46,7 @@ export default function UserInfo() {
     console.log("changeInfo");
     
     let data={firstname:firstName,lastname:lastName,password:Password};
+    setIsLoading(true)
     let result=await apis.updateUserInfoRequest(localStorage.getItem("loginToken1"),data);
     console.log(result);
     if(result.data?.status){
@@ -55,7 +57,7 @@ export default function UserInfo() {
         position: "top",
         isClosable: true,
       });
-
+      setIsLoading(false)
     }else{
       toast({
         title: result.data.message,
@@ -64,13 +66,14 @@ export default function UserInfo() {
         position: "top",
         isClosable: true,
       });
+      setIsLoading(false)
     }
     // setTimeout(() => {
     //   window.location.href="http://localhost:5173/userinfo"
     // }, 3000);
   }
   async function confirmEmail(){
-
+    setIsLoading(true)
     let result:any=await apis.updateConfirmRequest(localStorage.getItem("loginToken1"));
     console.log(result);
     if(result.data?.status){
@@ -81,7 +84,7 @@ export default function UserInfo() {
         position: "top",
         isClosable: true,
       });
-
+      setIsLoading(false)
     }else{
       toast({
         title: result.data.message,
@@ -90,11 +93,14 @@ export default function UserInfo() {
         position: "top",
         isClosable: true,
       });
+      setIsLoading(false)
     }
 
   }
   
-      return (<>
+      return (
+        !isLoading?
+      <>
       {/* https://bootdey.com/snippets/view/account-setting-or-edit-profile#css */}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"></link>
       <div className="container">
@@ -282,7 +288,8 @@ export default function UserInfo() {
   </div>
 </div>
       </>
-
+:
+<Loading></Loading>
 
   
   )

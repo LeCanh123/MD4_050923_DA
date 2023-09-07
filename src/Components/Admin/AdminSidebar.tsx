@@ -27,7 +27,7 @@ function AdminSidebar() {
           return (
             <Link to={el.link} key={id}>
               <li className="row">
-                <div className="icon">{el.icon}</div>
+                <div className="icon" style={{position:"relative",top:"25px"}}>{el.icon}</div>
                 <div className="title">{el.title}</div>
               </li>
             </Link>

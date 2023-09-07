@@ -5,11 +5,12 @@ import {
   MdOutlineAddToHomeScreen,
 } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import { relative } from "path";
 
 
 const NavbarTop = () => {
   return (
-    <Box bg={"black"} paddingTop={2} paddingBottom={2}>
+    <Box bg={"black"} paddingTop={2} paddingBottom={2} style={{position:"relative"}}>
       <Flex
       height={"20px"}
         width="80%"

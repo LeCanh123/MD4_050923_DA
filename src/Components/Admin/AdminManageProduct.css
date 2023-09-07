@@ -1,12 +1,12 @@
 .AdminSideBar {
   width: 250px;
   margin-left: 0px;
-  height: 700px;
+  height: 1000px;
   display: flex;
   border: 1px solid gainsboro;
   background-color: #f7f8f7;
   position: absolute;
-  top:100px;
+  top:50px;
 }
 
 .AdminNavbar {
