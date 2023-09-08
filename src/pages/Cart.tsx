@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+
 import {
   addToCart,
   addToCart1,
@@ -31,151 +31,192 @@ import Navbar from "../Components/Home/Navbar";
 import Footer from "../Components/Home/Footer";
 import apis from "../apis";
 import { getcart } from "../redux/cartReducer/reducer";
+import userCart from "@/apis/userCart";
+
+//redux
+import { getcart1 } from "../redux/cartReducer/reducer";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
+
+
+
+
+
 
 
 
 export const Cart = () => {
-  let { isAuth, afterLoginUser } = useSelector((state) => state.AuthReducer);
-  let [checkItem,setCheckItem]=useState("")
-  const navigate = useNavigate();
-  const toast = useToast();
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((store) => {
-    return store.cartReducer
-  })
-
-
-console.log(cartItems,"cartItems");
-
-  const cartItems1=useSelector((store) => {
-    return store.cartReducer
-  })
 
 
 
+//   let { isAuth, afterLoginUser } = useSelector((state) => state.AuthReducer);
+//   let [checkItem,setCheckItem]=useState("")
+//   const navigate = useNavigate();
+//   const toast = useToast();
+//   const dispatch = useDispatch();
+//   const { cartItems } = useSelector((store) => {
+//     return store.cartReducer
+//   })
 
-  useEffect(async()=>{
-    let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
-    console.log("usercart",usercart);
-    if(usercart.data?.data?.length!=0){
-      dispatch(getcart(usercart.data.data));
-    }
-  },[])
+
+// console.log(cartItems,"cartItems");
+
+//   const cartItems1=useSelector((store) => {
+//     return store.cartReducer
+//   })
+
+
+
+
+//   useEffect(async()=>{
+//     let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
+//     console.log("usercart",usercart);
+//     if(usercart.data?.data?.length!=0){
+//       dispatch(getcart(usercart.data.data));
+//     }
+//   },[])
 
  
-  let saved = 0;
-  const getData = () => {
-    axios
-      .get(process.env.REACT_APP_HOST+`cart1`)
-      .then((res) => {
-        // dispatch(addToCart1(res.data));
-        res.data.forEach(element => {
-          if(element.id==afterLoginUser.email){
-            dispatch(addToCart(element.product));
-          }
-        });;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+//   let saved = 0;
+//   const getData = () => {
+//     axios
+//       .get(process.env.REACT_APP_HOST+`cart1`)
+//       .then((res) => {
+//         // dispatch(addToCart1(res.data));
+//         res.data.forEach(element => {
+//           if(element.id==afterLoginUser.email){
+//             dispatch(addToCart(element.product));
+//           }
+//         });;
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
 
 
 
 
-  const handleDelete = async(id) => {
-    // localStorage.getItem("loginToken1")
-    // dispatch(handleRemove(cartItems,e,afterLoginUser.email));
-    let deleteproduct1=await apis.deleteproduct(localStorage.getItem("loginToken1"),id)
-    console.log("deleteproduct1",deleteproduct1);
-if(deleteproduct1.data.status==true){
-  let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
-  console.log("usercart",usercart);
-  if(usercart.data?.data?.length!=0){
-    dispatch(getcart(usercart.data.data));
-  }
-  toast({
-    title: "Removed from cart",
-    description: "Deleted from Cart",
-    status: "success",
-    position: "top",
-    duration: 1000,
-    isClosable: true,
-  });
-}else{
-  window.location.href="http://localhost:3000/"
-}
+//   const handleDelete = async(id) => {
+//     // localStorage.getItem("loginToken1")
+//     // dispatch(handleRemove(cartItems,e,afterLoginUser.email));
+//     let deleteproduct1=await apis.deleteproduct(localStorage.getItem("loginToken1"),id)
+//     console.log("deleteproduct1",deleteproduct1);
+// if(deleteproduct1.data.status==true){
+//   let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
+//   console.log("usercart",usercart);
+//   if(usercart.data?.data?.length!=0){
+//     dispatch(getcart(usercart.data.data));
+//   }
+//   toast({
+//     title: "Removed from cart",
+//     description: "Deleted from Cart",
+//     status: "success",
+//     position: "top",
+//     duration: 1000,
+//     isClosable: true,
+//   });
+// }else{
+//   window.location.href="http://localhost:3000/"
+// }
 
 
-  };
+//   };
 
-  const handleINC = async(token,id, type) => {
-if(token){
-let increaseproduct=await apis.increaseproduct({token,id,type})
-console.log("increaseproduct",increaseproduct);
-if(increaseproduct.status==200){
-  // window.location.href="http://localhost:3000/cart"
-  // setCheckItem(Date.now())
-  let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
-  console.log("usercart",usercart);
-  if(usercart.data?.data?.length!=0){
-    dispatch(getcart(usercart.data.data));
-  }
+//   const handleINC = async(token,id, type) => {
+// if(token){
+// let increaseproduct=await apis.increaseproduct({token,id,type})
+// console.log("increaseproduct",increaseproduct);
+// if(increaseproduct.status==200){
+//   // window.location.href="http://localhost:3000/cart"
+//   // setCheckItem(Date.now())
+//   let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
+//   console.log("usercart",usercart);
+//   if(usercart.data?.data?.length!=0){
+//     dispatch(getcart(usercart.data.data));
+//   }
 
   
-}else{
-  toast({
-    title: "Lỗi",
-    description: "Err",
-    status: "error",
-    position: "top",
-    duration: 1000,
-    isClosable: true,
+// }else{
+//   toast({
+//     title: "Lỗi",
+//     description: "Err",
+//     status: "error",
+//     position: "top",
+//     duration: 1000,
+//     isClosable: true,
+//   });
+// }
+
+// }else{
+//   toast({
+//     title: "Chưa đăng nhập",
+//     description: "Err",
+//     status: "error",
+//     position: "top",
+//     duration: 1000,
+//     isClosable: true,
+//   });
+// }
+
+//   };
+
+//   const handleDEC = (id, VAL) => {
+//     let newCartItem=cartItems.map((item,ind)=>{
+// if(ind!=VAL){
+//   return item
+// }else{
+//   return {...item,quantity:item.quantity-1}
+// }
+//     })
+//     axios
+//       .put(process.env.REACT_APP_HOST+`cart1/`+afterLoginUser.email, {
+//        id:afterLoginUser.email,product:[...newCartItem]
+//       })
+//       .then((res) => {
+//         dispatch(incrementQuantity(res.data));
+//         // getData();
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+
+//   const getTotalPrice = () => {
+//     return cartItems.reduce((total, e) => total + e.product.price * e.quantity, 0);
+//   };
+// let cartItems =useSelector()
+
+  const { cartItems } = useSelector((store:any) => {
+    // console.log(store);
+    
+    return store.cartReducer;
   });
-}
+  console.log(cartItems);
 
-}else{
-  toast({
-    title: "Chưa đăng nhập",
-    description: "Err",
-    status: "error",
-    position: "top",
-    duration: 1000,
-    isClosable: true,
-  });
-}
-
-  };
-
-  const handleDEC = (id, VAL) => {
-    let newCartItem=cartItems.map((item,ind)=>{
-if(ind!=VAL){
-  return item
-}else{
-  return {...item,quantity:item.quantity-1}
-}
-    })
-    axios
-      .put(process.env.REACT_APP_HOST+`cart1/`+afterLoginUser.email, {
-       id:afterLoginUser.email,product:[...newCartItem]
-      })
-      .then((res) => {
-        dispatch(incrementQuantity(res.data));
-        // getData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getTotalPrice = () => {
-    return cartItems.reduce((total, e) => total + e.product.price * e.quantity, 0);
-  };
 
   useEffect(() => {
-    getData();
+    async function getCart(){
+      getcart1(localStorage.getItem("loginToken1"),dispatch);
+
+
+      // let getCartResult=await userCart.getCart(localStorage.getItem("loginToken1"));
+      // console.log(getCartResult);
+      // if(getCartResult.data){
+      //   setCartItems(getCartResult.data)
+      // }
+    }
+    getCart();
   }, []);
 
+
+
+
+// let cartItems =[]
+let saved:any =1;
   return (
     // isAuth?
     <>
@@ -220,12 +261,12 @@ if(ind!=VAL){
               </Heading>
             ) : (
               <Tbody>
-                {cartItems?.map((e,ins) => {
+                {cartItems?.map((e:any,ins:any) => {
                   {
                     saved =
                       saved +
-                      (Math.floor(e.product.price) -
-                        Math.floor(e.product.price - (10 * e.product.price) / 100)) *
+                      (Math.floor(e.products.price) -
+                        Math.floor(e.products.price - (10 * e.products.price) / 100)) *
                         e.quantity;
                   }
                   return (
@@ -239,21 +280,21 @@ if(ind!=VAL){
                         <Image
                           width={"100px"}
                           height={"100px"}
-                          src={e.product.image}
+                          src={e.products.productimage[0]?.image}
                           alt="Dan Abramov"
                         />
                         {e.brand}
                         <br></br>
-                        {e.product.title}
+                        {e.products.title}
                       </Td>
                       <Td>
                         <Text>Original Price</Text>
-                        <span textDecoration={"line-through"}>
+                        {/* <span textDecoration={"line-through"}>
                           $ {Math.floor(e.product.price)}
-                        </span>
+                        </span> */}
                         <br></br>
                         <Text>Discounted Price</Text>
-                        $ {Math.floor(e.product.price - (10 * e.product.price) / 100)}
+                        $ {Math.floor(e.products.price - (10 * e.products.price) / 100)}
                         <br></br>
                       </Td>
                       <Td>
@@ -261,7 +302,7 @@ if(ind!=VAL){
                           isDisabled={e.quantity === 1}
                           variant={"outline"}
                           m={"2px"}
-                          onClick={() => handleINC(localStorage.getItem("loginToken1"),e.product.id, "decrease")}
+                          // onClick={() => handleINC(localStorage.getItem("loginToken1"),e.product.id, "decrease")}
                         >
                           -
                         </Button>
@@ -271,24 +312,25 @@ if(ind!=VAL){
                         <Button
                           variant={"outline"}
                           m={"2px"}
-                          onClick={() => handleINC(localStorage.getItem("loginToken1"),e.product.id, "increase")}
+                          // onClick={() => handleINC(localStorage.getItem("loginToken1"),e.product.id, "increase")}
                         >
                           +
                         </Button>
                       </Td>
                       <Td>
                         ${" "}
-                        {Math.floor(e.product.price - (10 * e.product.price) / 100) *
+                        {Math.floor(e.products.price - (10 * e.products.price) / 100) *
                           e.quantity}
                       </Td>
                       <Td>
-                        <CloseIcon onClick={() => handleDelete(e.id)} />
+                        {/* <CloseIcon onClick={() => handleDelete(e.id)} /> */}
+                        <CloseIcon  />
                       </Td>
                       <Td>
                         {" "}
                         ${" "}
                         {Math.floor(
-                          e.product.price - Math.floor(e.product.price - (10 * e.product.price) / 100)
+                          e.products.price - Math.floor(e.products.price - (10 * e.products.price) / 100)
                         ) * e.quantity}
                       </Td>
                     </Tr>
@@ -317,7 +359,7 @@ if(ind!=VAL){
                 <Text>Delivery Charges</Text>
               </Box>
               <Box>
-                <Text>$ {getTotalPrice() - saved}</Text>
+                {/* <Text>$ {getTotalPrice() - saved}</Text> */}
                 <Text>***</Text>
               </Box>
               <Box borderLeft={"1px solid #e8e8e8"} color="red" pl="2px">
@@ -336,7 +378,7 @@ if(ind!=VAL){
               </Heading>
               <Heading as={"h6"} fontWeight="250">
                 {" "}
-                $ {getTotalPrice() - saved}
+                {/* $ {getTotalPrice() - saved} */}
               </Heading>
             </Flex>
             <Box float={"right"}>
@@ -346,15 +388,15 @@ if(ind!=VAL){
                   if (cartItems.length !== 0) {
                     window.location.href="http://localhost:3000/checkout";
                   } else {
-                    toast({
-                      title: "Cart is Empty.",
-                      description: "Please add some products.",
-                      status: "error",
-                      duration: 2000,
-                      isClosable: true,
-                      position: "top",
-                    });
-                    navigate("http://localhost:3000/");
+                    // toast({
+                    //   title: "Cart is Empty.",
+                    //   description: "Please add some products.",
+                    //   status: "error",
+                    //   duration: 2000,
+                    //   isClosable: true,
+                    //   position: "top",
+                    // });
+                    // navigate("http://localhost:3000/");
                   }
                 }}
               >

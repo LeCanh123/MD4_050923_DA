@@ -9,7 +9,8 @@ const menSlice = createSlice({
     isError: false,
     total: 0,
     women: [],
-    men:[]
+    men:[],
+    cart:[]
   },
   reducers: {
     getMenRequestPending: (state) => {
@@ -47,7 +48,7 @@ export const fetchMensData =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
   async function  fetchmen1() {
   // dispatch(getMenRequestPending());
   try {
-    const res = userProduct.getMenproduct("");
+    const res = await userProduct.getMenproduct("");
     dispatch(getMenRequestSuccess(res));
     
   } catch (error) {

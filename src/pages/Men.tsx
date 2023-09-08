@@ -30,10 +30,11 @@ export const Men = () => {
     let menproduct=fetchMensData("",dispatch);
     console.log(menproduct);
   }, []);
-    const { men } = useSelector((store:any) => {
+
+  const { men } = useSelector((store:any) => {
     return store.MenReducer;
   });
-console.log(men);
+  console.log(men);
 
 
   
@@ -135,8 +136,8 @@ let getPaginatedProducts =men
             })} */}
 
                   {
-            getPaginatedProducts.map((el) => {
-              return <Card />;
+            getPaginatedProducts.map((el: any) => {
+              return <Card data={el} canh={"002"}/>;
             })
             
             }
