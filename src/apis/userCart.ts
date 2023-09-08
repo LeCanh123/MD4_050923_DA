@@ -49,5 +49,45 @@ export default {
             );
 
       },
+    deleteProduct:async (token:any,id:any)=> {
+        console.log("vào deleteProduct");
+          return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/userproduct/deleteproduct/`,{token,id})
+            .then(res => {
+              console.log(res);
+              // return res
+              return res
+            })
+            .catch(err => {
+              return {
+                data:{
+                  status:false,
+                  message:"Lỗi hệ thống"
+                }
+              }
+            }
+   
+              
+              );
+  
+      },
+    changeQuantity:async (token:any,id:any,type:any)=> {
+        console.log("vào deleteProduct");
+          return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/userproduct/changequantity/`,{token,id,type})
+          .then(res => {
+            console.log(res);
+            // return res
+            return res
+          })
+          .catch(err => {
+            return {
+              data:{
+                status:false,
+                message:"Lỗi hệ thống"
+              }
+            }
+          }
+              );
+  
+      },
       
     }

@@ -17,26 +17,19 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
-
-import {
-  addToCart,
-  addToCart1,
-  decrementQuantity,
-  incrementQuantity,
-  removeFromCart,
-  handleRemove
-} from "../redux/cartReducer/reducer";
-import axios from "axios";
 import Navbar from "../Components/Home/Navbar";
 import Footer from "../Components/Home/Footer";
 import apis from "../apis";
 import { getcart } from "../redux/cartReducer/reducer";
 import userCart from "@/apis/userCart";
 
+
 //redux
 import { getcart1 } from "../redux/cartReducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
 
+//loading
+import Loading from "@loading/Loading"
 
 
 
@@ -48,8 +41,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export const Cart = () => {
+  let [isLoading,setIsLoading]=useState(false);
+  const toast = useToast();
   const dispatch = useDispatch();
-
+  let [islogin,setIsLogin]=useState(false)
 
 
 //   let { isAuth, afterLoginUser } = useSelector((state) => state.AuthReducer);
@@ -185,40 +180,97 @@ export const Cart = () => {
 //       });
 //   };
 
-//   const getTotalPrice = () => {
-//     return cartItems.reduce((total, e) => total + e.product.price * e.quantity, 0);
-//   };
-// let cartItems =useSelector()
+
 
   const { cartItems } = useSelector((store:any) => {
-    // console.log(store);
-    
     return store.cartReducer;
   });
   console.log(cartItems);
+
+  const getTotalPrice = () => {
+    
+    return cartItems.reduce((total:any, e:any) => {
+    console.log(e.quantity);
+      return total + e.products.price * e.quantity}, 0);
+  };
 
 
   useEffect(() => {
     async function getCart(){
       getcart1(localStorage.getItem("loginToken1"),dispatch);
-
-
-      // let getCartResult=await userCart.getCart(localStorage.getItem("loginToken1"));
-      // console.log(getCartResult);
-      // if(getCartResult.data){
-      //   setCartItems(getCartResult.data)
-      // }
+      if(localStorage.getItem("loginToken1")){
+        setIsLogin(true);
+      }
     }
     getCart();
   }, []);
 
+  async function handleDelete(id:any){
+    setIsLoading(true)
+    let deleteProductResult=await userCart.deleteProduct(localStorage.getItem("loginToken1"),id);
+    console.log(deleteProductResult);
+    if(deleteProductResult.data?.status){
+      toast({
+        title: "Success",
+        description: deleteProductResult.data.message,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      getcart1(localStorage.getItem("loginToken1"),dispatch);
+      setIsLoading(false)
+    }else{
+      toast({
+        title: "Err",
+        description: deleteProductResult.data.message,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      setIsLoading(false)
+    }
+
+  }
+
+  async function handleChangeQuantity(id:any,type:any){
+    setIsLoading(true)
+    let changeQuantityResult=await userCart.changeQuantity(localStorage.getItem("loginToken1"),id,type);
+    if(changeQuantityResult.data?.status){
+      toast({
+        title: "Success",
+        description: changeQuantityResult.data.message,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      getcart1(localStorage.getItem("loginToken1"),dispatch);
+      setIsLoading(false)
+    }else{
+      toast({
+        title: "Err",
+        description: changeQuantityResult.data.message,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      setIsLoading(false)
+    }
+
+
+  }
 
 
 
-// let cartItems =[]
-let saved:any =1;
+
+
+let saved:any =0;
   return (
-    // isAuth?
+    !isLoading?
+    islogin?
     <>
       <Navbar />
       <Box width="100%">
@@ -265,8 +317,8 @@ let saved:any =1;
                   {
                     saved =
                       saved +
-                      (Math.floor(e.products.price) -
-                        Math.floor(e.products.price - (10 * e.products.price) / 100)) *
+                      (Math.floor(e.products.actualprice) -
+                        Math.floor(e.products.price )) *
                         e.quantity;
                   }
                   return (
@@ -294,7 +346,7 @@ let saved:any =1;
                         </span> */}
                         <br></br>
                         <Text>Discounted Price</Text>
-                        $ {Math.floor(e.products.price - (10 * e.products.price) / 100)}
+                        $ {Math.floor(e.products.actualprice - ( e.products.price))}
                         <br></br>
                       </Td>
                       <Td>
@@ -302,7 +354,7 @@ let saved:any =1;
                           isDisabled={e.quantity === 1}
                           variant={"outline"}
                           m={"2px"}
-                          // onClick={() => handleINC(localStorage.getItem("loginToken1"),e.product.id, "decrease")}
+                          onClick={() => handleChangeQuantity(e.products.id, "decrease")}
                         >
                           -
                         </Button>
@@ -312,7 +364,7 @@ let saved:any =1;
                         <Button
                           variant={"outline"}
                           m={"2px"}
-                          // onClick={() => handleINC(localStorage.getItem("loginToken1"),e.product.id, "increase")}
+                          onClick={() => handleChangeQuantity(e.products.id, "increase")}
                         >
                           +
                         </Button>
@@ -324,7 +376,7 @@ let saved:any =1;
                       </Td>
                       <Td>
                         {/* <CloseIcon onClick={() => handleDelete(e.id)} /> */}
-                        <CloseIcon  />
+                        <CloseIcon  onClick={() => handleDelete(e.id)}/>
                       </Td>
                       <Td>
                         {" "}
@@ -359,7 +411,7 @@ let saved:any =1;
                 <Text>Delivery Charges</Text>
               </Box>
               <Box>
-                {/* <Text>$ {getTotalPrice() - saved}</Text> */}
+                <Text>$ {getTotalPrice() - saved}</Text>
                 <Text>***</Text>
               </Box>
               <Box borderLeft={"1px solid #e8e8e8"} color="red" pl="2px">
@@ -409,20 +461,22 @@ let saved:any =1;
       </Box>
       <Footer />
     </>
-    // :
-    // <>
-    // <Navbar />
-    // <Box width="100%">
-    //   <Text
-    //     fontSize={"24px"}
-    //     textAlign={"left"}
-    //     fontWeight={300}
-    //     borderBottom={"1px solid #e8e8e8"}
-    //     pb={"6px"}
-    //   >
-    //   Login To View Cart
-    //   </Text>
-    //   </Box>
-    //   </>
+    :
+    <>
+    <Navbar />
+    <Box width="100%">
+      <Text
+        fontSize={"24px"}
+        textAlign={"left"}
+        fontWeight={300}
+        borderBottom={"1px solid #e8e8e8"}
+        pb={"6px"}
+      >
+      Login To View Cart
+      </Text>
+      </Box>
+    </>
+    :
+    <Loading/>
   );
 };
