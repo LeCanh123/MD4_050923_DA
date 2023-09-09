@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 
 
 interface Props {
@@ -18,8 +18,14 @@ interface Props {
 }
 
 const Menfilter: React.FC<Props> = ({ type }) => {
-  console.log("Menfilter type",type);
-  
+  // const dispatch = useDispatch();
+  const { category1 } = useSelector((store:any) => {
+    return store.MenReducer;
+  });
+
+
+
+
   const getCurrentPage = (page:number) => {
     page = Number(page);
 
@@ -38,8 +44,6 @@ const Menfilter: React.FC<Props> = ({ type }) => {
   const [order, setOrder] = useState(intialOrder || "");
 
   const handleSort = (e:any) => {
-    console.log("e.target.value",e.target.value);
-    
     setOrder(e.target.value);
   };
 
@@ -156,40 +160,22 @@ const Menfilter: React.FC<Props> = ({ type }) => {
               <Portal>
                 <PopoverContent>
                   <PopoverBody>
-                    <input
+                    {category1.map((category2:any)=>
+                      <>
+                       <input
                       onChange={handleChange}
                       checked={category.includes(
-                        type === "men"
-                          ? "Casual Shirts"
-                          : "Dresses and Jumpsuits"
+                        category2.name
                       )}
                       style={{ marginRight: "10px" }}
-                      value={
-                        type === "men"
-                          ? "Casual Shirts"
-                          : "Dresses and Jumpsuits"
-                      }
+                      value={category2.name}
                       type="checkbox"
                     />
                     <label>
-                      {type === "men"
-                        ? "Casual Shirts"
-                        : "Dresses and Jumpsuits"}
-                    </label>
-                    <br />
-                    <br />
-                    <input
-                      onChange={handleChange}
-                      checked={category.includes(
-                        type === "men" ? "Jeans" : "Kurtas and Kurtis"
+                      {category2.name}
+                    </label><br></br>
+                      </>
                       )}
-                      style={{ marginRight: "10px" }}
-                      value={type === "men" ? "Jeans" : "Kurtas and Kurtis"}
-                      type="checkbox"
-                    />
-                    <label>
-                      {type === "men" ? "Jeans" : "Kurtas and Kurtis"}
-                    </label>
                   </PopoverBody>
                 </PopoverContent>
               </Portal>

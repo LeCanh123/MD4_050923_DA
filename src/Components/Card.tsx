@@ -60,9 +60,7 @@ import { getcart1 } from "../redux/cartReducer/reducer";
 
 
   const handleAddToCart= async(id:any) => {
-        console.log("vào handleAddToCart");
         let addToCartResult =await userCart.addToCart(localStorage.getItem("loginToken1"),id)
-        console.log("add1",addToCartResult);
         if(addToCartResult.data?.status){
           toast({
             title: "Success",

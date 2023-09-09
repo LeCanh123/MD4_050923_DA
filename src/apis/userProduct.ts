@@ -4,7 +4,6 @@ export default {
     getMenproduct:async (data:any)=> {
         return axios.get(import.meta.env.VITE_SERVER_HOST+`apis/v1/userproduct/getmenproduct/`)
           .then(res => {
-            console.log(res);
             // return res
             return {data:res.data.data,
             total:1
@@ -13,9 +12,6 @@ export default {
           .catch(error => 
             
             {
-
-                console.log(error)
-
                 return {data:[{id:1}],
                 total:4
                         }
@@ -24,7 +20,33 @@ export default {
         // return {data:[{id:1},{id:2},{id:3},{id:4}],
         //         total:1
         //         }
-      },
-
-      
+    },
+    getCategory:async (token:any)=> {
+      return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/userproduct/getcategory`,{token})
+        .then(res => {
+          return res
+        })
+        .catch(error => 
+          {
+            return {data:{
+              status:false,
+              message:"Lỗi hệ thống"
+            }}
+        }
+          );
+    },
+    getProductByCategory:async (token:any,category:any)=> {
+      return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/userproduct/getproductbycategory`,{token,category})
+        .then(res => {
+          return res
+        })
+        .catch(error => 
+          {
+            return {data:{
+              status:false,
+              message:"Lỗi hệ thống"
+            }}
+        }
+          );
+    },
     }

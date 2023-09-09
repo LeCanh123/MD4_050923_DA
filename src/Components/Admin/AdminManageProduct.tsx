@@ -246,8 +246,8 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
     return (
       !isLoading?
       <>
-       <div className="AdminSideBar" >
-      <ul className="SidebarList" style={{zIndex:10}}>
+       <div className="AdminSideBar" style={{zIndex:1000}}>
+      <ul className="SidebarList" style={{zIndex:1000}}>
     
             <div  key={1} onClick={()=>changecomponent(1)} style={{backgroundColor:"red"}}>
               <li className="row" >

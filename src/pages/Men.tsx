@@ -17,18 +17,24 @@ import apis from "../apis";
 
 
 //lấy data men
-import { fetchMensData,sortbyprice } from "../redux/MenReducer/reducer";
+import { fetchMensData,getCategory,sortbyprice,getProductByCategory } from "../redux/MenReducer/reducer";
 
 export const Men = () => {
 
   //params
   const [searchParams, setSearchParams]:any = useSearchParams();
   const intialOrder = searchParams.get("order");
-  console.log("trang men intialOrder",intialOrder);
+  const initialCategory = searchParams.getAll("category");
+  
   useEffect(()=> {
 
     let sortProduct=sortbyprice({genderType:"men",sortType:intialOrder},dispatch);
-    // console.log(menproduct);
+    let getcategory1:any=getCategory({token:localStorage.getItem("loginToken1")},dispatch)
+    if(initialCategory.length!=0){
+      let getProductByCategory2=getProductByCategory({token:localStorage.getItem("loginToken1"),
+        listCategory:initialCategory
+        },dispatch)
+    }
   }, [searchParams]);
 
 
@@ -39,13 +45,11 @@ export const Men = () => {
   const dispatch = useDispatch();
   useEffect(()=> {
     let menproduct=fetchMensData("",dispatch);
-    console.log(menproduct);
   }, []);
 
   const { men } = useSelector((store:any) => {
     return store.MenReducer;
   });
-  console.log(men);
 let getPaginatedProducts =men
   return (
     <div>

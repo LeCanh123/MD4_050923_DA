@@ -10,7 +10,7 @@ const menSlice = createSlice({
     total: 0,
     women: [],
     men:[],
-    cart:[]
+    category1:[]
   },
   reducers: {
     getMenRequestPending: (state) => {
@@ -19,14 +19,18 @@ const menSlice = createSlice({
     },
 
     getMenRequestSuccess: (state, { payload }) => {
-      console.log("payload.data",payload.data);
       state.isLoading = false;
       state.isError = false;
       state.total = payload.total;
       state.men = payload.data;
     },
+    getProductByCategorysl: (state, { payload }) => {
+      // state.isLoading = false;
+      // state.isError = false;
+      // state.total = payload.total;
+      state.men = payload;
+    },
     sortByPriceSuccess: (state, { payload }) => {
-      console.log("payload.data",payload);
       if(payload.genderType=="men"){
         if(payload.sortType=="desc"){
           state.men=state.men.sort((a:any,b:any)=>b.price-a.price)
@@ -35,8 +39,12 @@ const menSlice = createSlice({
         }
       }
     },
-
-
+    getCategoryRequestSuccess: (state, { payload }) => {
+      // state.isLoading = false;
+      // state.isError = false;
+      // state.total = payload.total;
+      state.category1 = payload.men;
+    },
 
     getMenRequestFailure: (state) => {
       state.isLoading = false;
@@ -55,8 +63,10 @@ export const {
   getMenRequestPending,
   getMenRequestSuccess,
   sortByPriceSuccess,
+  getProductByCategorysl,
   getMenRequestFailure,
   getWomenRequestSuccess,
+  getCategoryRequestSuccess
 
 } = menSlice.actions;
 
@@ -74,9 +84,40 @@ export const fetchMensData =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
 fetchmen1();
 }
 
+
+
+export const getProductByCategory =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
+  async function  fetchmen1() {
+  // dispatch(getMenRequestPending());
+  try {
+    const res = await userProduct.getProductByCategory(paramObj.token,paramObj.listCategory);
+    console.log(res.data.data);
+    
+    dispatch(getProductByCategorysl(res.data.data));
+    
+  } catch (error) {
+    dispatch(getMenRequestFailure());
+  }
+};
+fetchmen1();
+}
+
+export const getCategory =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
+  async function  getCategory1() {
+  // dispatch(getMenRequestPending());
+  try {
+    const res = await userProduct.getCategory(paramObj.token);
+    dispatch(getCategoryRequestSuccess(res.data.data));
+    
+  } catch (error) {
+    dispatch(getMenRequestFailure());
+  }
+};
+getCategory1();
+}
+
+
 export const sortbyprice =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
-  console.log("paramObj",paramObj);
-  
   async function  sortbyprice1() {
   dispatch(getMenRequestPending());
   try {
