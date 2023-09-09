@@ -10,15 +10,16 @@ import {
 import "./Card.css";
 import React, { useEffect, useState } from "react";
 import { Link, json } from "react-router-dom";
-import axios from "axios";
 import { useDispatch ,useSelector} from "react-redux";
-import { handleAddToCart,addToCart,addToCart1} from "../redux/cartReducer/reducer";
+// import { handleAddToCart,addToCart,addToCart1} from "../redux/cartReducer/reducer";
 import userCart from "@/apis/userCart";
-import { getcart } from "../redux/cartReducer/reducer";
+import { getcart1 } from "../redux/cartReducer/reducer";
 
 // const Card = ({ actualPrice, type, id, image, price, title, discount }) => {
   const Card = (props:any) => {
-    console.log("id",props);
+    const toast = useToast();
+    const dispatch = useDispatch();
+    // console.log("id",props);
     
 //   localStorage.setItem("checkId","false")
 
@@ -59,46 +60,29 @@ import { getcart } from "../redux/cartReducer/reducer";
 
 
   const handleAddToCart= async(id:any) => {
-    
+        console.log("vào handleAddToCart");
         let addToCartResult =await userCart.addToCart(localStorage.getItem("loginToken1"),id)
         console.log("add1",addToCartResult);
-
-
-
-
-  //reload lại giỏ hàng
-
-
-
-
-
-    // if(add1.status){
-    //   dispatch(getcart(localStorage.getItem("loginToken1")))
-    //   //lấy giỏ hàng
-    // let usercart=await apis.getcart(localStorage.getItem("loginToken1"))
-    // console.log("usercart",usercart.data.data);
-    // if(usercart.data.data.length!=0){
-    //   dispatch(getcart(usercart.data.data));
-    // }
-    //   //
-    //       toast({
-    //               title: "Success",
-    //               description: "Thêm vào giỏ hàng thành công",
-    //               status: "success",
-    //               duration: 2000,
-    //               isClosable: true,
-    //               position: "top",
-    //             });
-    //       }else{
-    //         toast({
-    //           title: "Error",
-    //           description: "Thêm vào giỏ hàng thất bại",
-    //           status: "error",
-    //           duration: 2000,
-    //           isClosable: true,
-    //           position: "top",
-    //         });
-    //       }
+        if(addToCartResult.data?.status){
+          toast({
+            title: "Success",
+            description: addToCartResult.data.message,
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+        getcart1(localStorage.getItem("loginToken1"),dispatch);
+        }else{
+          toast({
+            title: "Err",
+            description: addToCartResult.data.message,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+        }
   }
 
 
@@ -107,13 +91,13 @@ import { getcart } from "../redux/cartReducer/reducer";
   return (
     <Box
       className="product-card"
-      // borderRadius={"20px"}
+      borderRadius={"20px"}
       width={"100%"}
       textAlign="left"
       height={"450px"}
     >
-      <a href={`/${"type"}/${props.data.id}`} >
-        <Image borderRadius={"20px"} style={{height:"300px",width:"200px",margin:"15px"}}  src={props.data?.productimage[0]?.image}></Image>
+      <Link to={`/${"type"}/${props.data.id}`} >
+        <Image borderRadius={"20px"} style={{height:"300px",width:"250px",margin:"15px",marginLeft:"15%"}}  src={props.data?.productimage[0]?.image}></Image>
         <Flex gap={"5px"} textAlign={"center"}>
           <Heading paddingTop={"8px"} size="md">
             ${props.data.price}
@@ -125,7 +109,7 @@ import { getcart } from "../redux/cartReducer/reducer";
         <Text paddingTop={"3px"} fontSize={"14px"}>
           {props.data.title}{" "}
         </Text>
-      </a>
+      </Link>
       <Button className="add-to-cart-btn" onClick={()=>handleAddToCart(props.data.id)}>
         Add To Cart
       </Button>

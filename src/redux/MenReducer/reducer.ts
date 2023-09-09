@@ -17,6 +17,7 @@ const menSlice = createSlice({
       state.isLoading = true;
       state.isError = false;
     },
+
     getMenRequestSuccess: (state, { payload }) => {
       console.log("payload.data",payload.data);
       state.isLoading = false;
@@ -24,6 +25,19 @@ const menSlice = createSlice({
       state.total = payload.total;
       state.men = payload.data;
     },
+    sortByPriceSuccess: (state, { payload }) => {
+      console.log("payload.data",payload);
+      if(payload.genderType=="men"){
+        if(payload.sortType=="desc"){
+          state.men=state.men.sort((a:any,b:any)=>b.price-a.price)
+        }else{
+          state.men=state.men.sort((a:any,b:any)=>a.price-b.price)
+        }
+      }
+    },
+
+
+
     getMenRequestFailure: (state) => {
       state.isLoading = false;
       state.isError = true;
@@ -40,8 +54,10 @@ const menSlice = createSlice({
 export const {
   getMenRequestPending,
   getMenRequestSuccess,
+  sortByPriceSuccess,
   getMenRequestFailure,
   getWomenRequestSuccess,
+
 } = menSlice.actions;
 
 export const fetchMensData =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
@@ -58,7 +74,21 @@ export const fetchMensData =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
 fetchmen1();
 }
 
-
+export const sortbyprice =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
+  console.log("paramObj",paramObj);
+  
+  async function  sortbyprice1() {
+  dispatch(getMenRequestPending());
+  try {
+    
+    dispatch(sortByPriceSuccess(paramObj));
+    
+  } catch (error) {
+    dispatch(getMenRequestFailure());
+  }
+};
+sortbyprice1();
+}
 
 
 // export const fetchWomensData = (paramObj) => async (dispatch) => {

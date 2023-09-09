@@ -13,7 +13,13 @@ import { useSearchParams } from "react-router-dom";
 
 
 
-const Menfilter = ({ type }) => {
+interface Props {
+  type: string;
+}
+
+const Menfilter: React.FC<Props> = ({ type }) => {
+  console.log("Menfilter type",type);
+  
   const getCurrentPage = (page:number) => {
     page = Number(page);
 
@@ -23,7 +29,7 @@ const Menfilter = ({ type }) => {
     return page;
   };
   const initRef = React.useRef();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams]:any = useSearchParams();
   const initialCategory = searchParams.getAll("category");
   const [category, setCategory] = useState(initialCategory || []);
   
@@ -32,6 +38,8 @@ const Menfilter = ({ type }) => {
   const [order, setOrder] = useState(intialOrder || "");
 
   const handleSort = (e:any) => {
+    console.log("e.target.value",e.target.value);
+    
     setOrder(e.target.value);
   };
 
@@ -50,6 +58,7 @@ const Menfilter = ({ type }) => {
 
   useEffect(() => {
     let params = {
+      order,
       page,
       category,
     };
@@ -72,7 +81,7 @@ const Menfilter = ({ type }) => {
           trigger={"hover"}
           closeOnBlur={false}
           placement="bottom-start"
-          initialFocusRef={initRef}
+          // initialFocusRef={initRef}
         >
           {({ isOpen, onClose }) => (
             <>
@@ -125,7 +134,7 @@ const Menfilter = ({ type }) => {
           trigger={"hover"}
           closeOnBlur={false}
           placement="bottom-start"
-          initialFocusRef={initRef}
+          // initialFocusRef={initRef}
         >
           {({ isOpen, onClose }) => (
             <>

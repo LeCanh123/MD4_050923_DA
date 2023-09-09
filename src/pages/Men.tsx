@@ -14,14 +14,25 @@ import Menfilter from "../Components/Filter/Menfilter";
 import { getMenRequestSuccess } from "../redux/MenReducer/reducer";
 import apis from "../apis";
 
+
+
 //lấy data men
-import { fetchMensData } from "../redux/MenReducer/reducer";
+import { fetchMensData,sortbyprice } from "../redux/MenReducer/reducer";
 
 export const Men = () => {
-//   const [isPageRedirected, setPageRedirected] = useState(false);
-//   let [paginatedProducts,setpaginatedProducts] =useState([]);
-//   const [searchParams] = useSearchParams();
-//   const location = useLocation();
+
+  //params
+  const [searchParams, setSearchParams]:any = useSearchParams();
+  const intialOrder = searchParams.get("order");
+  console.log("trang men intialOrder",intialOrder);
+  useEffect(()=> {
+
+    let sortProduct=sortbyprice({genderType:"men",sortType:intialOrder},dispatch);
+    // console.log(menproduct);
+  }, [searchParams]);
+
+
+
 
 
 //lấy data men
@@ -35,48 +46,6 @@ export const Men = () => {
     return store.MenReducer;
   });
   console.log(men);
-
-
-  
-
-//   const { men, isLoading, isError, total } = useSelector((store) => {
-//     return store.MenReducer;
-//   });
-//   /////////////////////////////////////////////
-//   const queryParams = new URLSearchParams(location.search);
-//   const itemsPerPage = 12;
-//   const currentPage = parseInt(queryParams.get('page')) || 1;
-//   const sortbycanh = queryParams.get('order') || "asc";
-//   const sortbycanh1 = queryParams.getAll('category');
-//  console.log(sortbycanh1);
-//   let getPaginatedProducts = (currentPage1) => {
-//     const startIndex = (currentPage - 1) * itemsPerPage;
-//     const endIndex = startIndex + itemsPerPage;
-//     if(currentPage1=="asc"){
-//     return men.slice(startIndex, endIndex).sort(function(a, b) {
-//         return a.price - b.price;
-//       });
-//     }else{
-//     return men.slice(startIndex, endIndex).sort(function(a, b) {
-//     return b.price - a.price;
-//   });
-//         }
-//     // return men.slice(startIndex, endIndex);
-//   };
-//   console.log(getPaginatedProducts(sortbycanh));
-
-
-//   useEffect(async() => {
-//     let menproduct=await apis.getmen("S")
-//     console.log("dddddddd",menproduct);
-//     if(menproduct.status==true){
-//     dispatch(getMenRequestSuccess({
-//     total:menproduct.data.length,
-//     data:menproduct.data
-//     }))
-//     }
-//   }, []);
-// let getPaginatedProducts =[{id:1},{id:2}]
 let getPaginatedProducts =men
   return (
     <div>
@@ -99,7 +68,7 @@ let getPaginatedProducts =men
           New arrivals in menswear upto 30% off ❤️
         </Text>
       </Box>
-      {/* <Menfilter type={"men"} /> */}
+      <Menfilter type={"men"} />
       {false ? (
         <Box
           textAlign={"center"}
@@ -146,7 +115,7 @@ let getPaginatedProducts =men
 
         </Grid>
       )}
-      {/* <Pagination1 /> */}
+      <Pagination1 />
       <Box mt={"30px"}>
         <Footer />
       </Box>

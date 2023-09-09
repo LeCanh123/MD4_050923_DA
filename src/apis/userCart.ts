@@ -2,26 +2,17 @@ import axios from 'axios';
 
 export default {
     addToCart:async (token:any,id:number)=> {
-
         return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/userproduct/addtocart/`,{token,id})
           .then(res => {
             console.log(res);
-            // return res
-            return {data:res.data?.data,
-            total:1
-                  }
+            return res
           })
-          .catch(error => 
-            
-            {
-
-                console.log(error)
-
-                return {data:[{id:1}],
-                total:4
-                        }
-            }
-            );
+          .catch(error => {
+                return {data: {
+                              status:false,
+                              message:"Lỗi hệ thống"
+                              }}}
+          );
 
       },
     getCart:async (token:any)=> {

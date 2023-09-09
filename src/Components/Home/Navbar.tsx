@@ -24,15 +24,21 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../redux/authReducer/reducer";
 import axios from "axios";
-import { addToCart } from "../../redux/cartReducer/reducer";
+// import { addToCart } from "../../redux/cartReducer/reducer";
 // import NavbarTop from "./NavbarTop";
-import { addToCart1 } from "../../redux/cartReducer/reducer";
+// import { addToCart1 } from "../../redux/cartReducer/reducer";
 
 
 
 
 
 const Navbar = () => {
+  const { cartItems } = useSelector((store:any) => {
+    return store.cartReducer;
+  });
+
+
+
 //   const navigate = useNavigate();
 //   const dispatch = useDispatch();
 //   const toast = useToast();
@@ -194,14 +200,14 @@ const Navbar = () => {
           </div>
        
           <div style={{paddingTop:"15px"}}>
-          <a href="/cart">
+          <Link to="/cart">
             <Flex flexDir={"column"} align={"center"} pos="relative">
               <Text>
                 <BsBag fontSize={"1.3rem"} />
               </Text>
               <Box
-                justify={"center"}
-                align={"center"}
+                // justify={"center"}
+                // align={"center"}
                 pos={"absolute"}
                 top={"-5px"}
                 right={"-12px"}
@@ -210,11 +216,20 @@ const Navbar = () => {
                 color={"white"}
                 borderRadius={"50%"}
                 bg={"#d53f8c"}
+                style={{
+                  justifyContent:"center",
+                  alignItems:"center",
+
+                }}
               >
-                <Text> 1</Text>
+                <Text
+                style={{
+                  paddingLeft:"5px"
+                }}
+                > {cartItems.length}</Text>
               </Box>
             </Flex>
-          </a>
+          </Link>
           </div>
   
         </Flex>
