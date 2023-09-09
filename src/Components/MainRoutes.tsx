@@ -18,6 +18,8 @@ import AdminLogin from "./Admin/AdminLogin";
 import Admin from "../pages/Admin";
 import PrivateRoutes from "./PrivateRoutes";
 import UserInfo from "../pages/UserInfo";
+import History from "@/pages/History";
+
 
 function MainRoutes() {
   return (
@@ -31,15 +33,16 @@ function MainRoutes() {
       <Route path="/women/:id" element={<Singlecardwomen />} /> */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      {/* <Route
+      <Route path="/history" element={<History />} />
+      <Route
         path="/checkout"
         element={
           // <PrivateRoutes>
             <Checkout />
           // </PrivateRoutes>
         }
-      /> */}
-      {/* <Route path="/payment" element={<Payment />} /> */}
+      />
+      <Route path="/payment" element={<Payment />} />
       <Route path="/cart" element={<Cart />} />
       {/* <Route path="/products" element={<AdminProduct />}></Route> */}
       <Route path="/manageProduct" element={<AdminManageProduct />}></Route>

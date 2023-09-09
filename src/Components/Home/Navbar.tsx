@@ -36,10 +36,7 @@ const Navbar = () => {
   const { cartItems } = useSelector((store:any) => {
     return store.cartReducer;
   });
-
-
-
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 //   const dispatch = useDispatch();
 //   const toast = useToast();
 //   let { isAuth, afterLoginUser } = useSelector((state) => {
@@ -133,9 +130,9 @@ const Navbar = () => {
                   <MenuItem color="pink.400">
                     Hey,{localStorage.getItem("loginName1") ? `${localStorage.getItem("loginName1")}` : "User"}
                   </MenuItem>
-                  <MenuItem onClick={() => window.location.href="/userinfo"}>My Account</MenuItem>
-                  <MenuItem>Order History</MenuItem>
-                  <MenuItem>My Address</MenuItem>
+                  <MenuItem onClick={() => navigate("/userinfo")}>My Account</MenuItem>
+                  <MenuItem onClick={() => navigate("/history")}>Order History</MenuItem>
+                  {/* <MenuItem>My Address</MenuItem> */}
                   <MenuItem>Payments</MenuItem>
                   <MenuItem>Reviews</MenuItem>
                   <MenuItem onClick={() => window.location.href="/adminLogin"}>

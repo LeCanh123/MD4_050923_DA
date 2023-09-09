@@ -26,110 +26,112 @@ const initialState = {
   ExpiringDate: "",
   cvv: "",
 };
+
+
 function Payment() {
-  const toast = useToast();
-  const navigate = useNavigate();
-  const [data, setData] = useState(initialState);
-  const [carddetails, setCarddetails] = useState("");
-  const [OTP, setOTP] = useState("");
-  const [enteredotp, setEnteredOtp] = useState("");
-  const [paymentOption, setPaymentOption] = useState("debit-card");
+  // const toast = useToast();
+  // const navigate = useNavigate();
+  // const [data, setData] = useState(initialState);
+  // const [carddetails, setCarddetails] = useState("");
+  // const [OTP, setOTP] = useState("");
+  // const [enteredotp, setEnteredOtp] = useState("");
+  // const [paymentOption, setPaymentOption] = useState("debit-card");
 
-  const { cartItems } = useSelector((store) => store.cartReducer);
-  let saved = 0;
-  cartItems.forEach((item) => {
-    saved =
-      saved +
-      (Math.floor(item.price) -
-        Math.floor(item.price - (10 * item.price) / 100)) *
-        item.quantity;
-  });
+  // const { cartItems } = useSelector((store) => store.cartReducer);
+  // let saved = 0;
+  // cartItems.forEach((item) => {
+  //   saved =
+  //     saved +
+  //     (Math.floor(item.price) -
+  //       Math.floor(item.price - (10 * item.price) / 100)) *
+  //       item.quantity;
+  // });
 
-  const handlePaymentOptionChange = (value) => {
-    setPaymentOption(value);
-  };
+  // const handlePaymentOptionChange = (value) => {
+  //   setPaymentOption(value);
+  // };
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setData((prevState) => ({ ...prevState, [name]: value }));
-  };
-  const getTotalPrice = () => {
-    return cartItems.reduce((total, e) => total + e.price * e.quantity, 0);
-  };
-  const handlePaymentSubmit = (event) => {
-    // Handle payment submission logic here
-    event.preventDefault();
-    if (data.cardno === "" || data.ExpiringDate === "" || data.cvv === "") {
-      toast({
-        description: "fill all fields",
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-      });
-    } else if (data.cardno.length !== 16) {
-      toast({
-        description: "Please Enter a Valid Card Number",
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-      });
-    } else if (data.cvv.length !== 3) {
-      toast({
-        description: "Please Enter a Valid CVV",
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-        position: "top",
-      });
-    } else {
-      setCarddetails(data);
-      var otp = Math.floor(100000 + Math.random() * 900000);
-      otp = String(otp);
-      otp = otp.substring(0, 4);
-      setOTP(otp);
+  // const handleChange = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   setData((prevState) => ({ ...prevState, [name]: value }));
+  // };
+  // const getTotalPrice = () => {
+  //   return cartItems.reduce((total, e) => total + e.price * e.quantity, 0);
+  // };
+  // const handlePaymentSubmit = (event) => {
+  //   // Handle payment submission logic here
+  //   event.preventDefault();
+  //   if (data.cardno === "" || data.ExpiringDate === "" || data.cvv === "") {
+  //     toast({
+  //       description: "fill all fields",
+  //       status: "error",
+  //       duration: 1000,
+  //       isClosable: true,
+  //     });
+  //   } else if (data.cardno.length !== 16) {
+  //     toast({
+  //       description: "Please Enter a Valid Card Number",
+  //       status: "error",
+  //       duration: 1000,
+  //       isClosable: true,
+  //     });
+  //   } else if (data.cvv.length !== 3) {
+  //     toast({
+  //       description: "Please Enter a Valid CVV",
+  //       status: "error",
+  //       duration: 1000,
+  //       isClosable: true,
+  //       position: "top",
+  //     });
+  //   } else {
+  //     setCarddetails(data);
+  //     var otp = Math.floor(100000 + Math.random() * 900000);
+  //     otp = String(otp);
+  //     otp = otp.substring(0, 4);
+  //     setOTP(otp);
 
-      toast({
-        description: `Your OTP is ${otp}`,
-        status: "success",
-        isClosable: true,
-        position: "top",
-      });
-    }
-  };
-  const handlePay = (e) => {
-    e.preventDefault();
+  //     toast({
+  //       description: `Your OTP is ${otp}`,
+  //       status: "success",
+  //       isClosable: true,
+  //       position: "top",
+  //     });
+  //   }
+  // };
+  // const handlePay = (e) => {
+  //   e.preventDefault();
 
-    if (enteredotp === OTP) {
-      cartItems.length > 0 &&
-        cartItems.forEach((el) => [
-          axios.delete(process.env.REACT_APP_HOST+
-            `cart/${el.id}`
-          ),
-        ]);
+  //   if (enteredotp === OTP) {
+  //     cartItems.length > 0 &&
+  //       cartItems.forEach((el) => [
+  //         axios.delete(process.env.REACT_APP_HOST+
+  //           `cart/${el.id}`
+  //         ),
+  //       ]);
 
-      toast({
-        title: ` Congratulations! Payment successful`,
-        description: `Your Order has been Placed`,
-        status: "success",
-        isClosable: true,
-        duration: 2000,
-        position: "top",
-      });
+  //     toast({
+  //       title: ` Congratulations! Payment successful`,
+  //       description: `Your Order has been Placed`,
+  //       status: "success",
+  //       isClosable: true,
+  //       duration: 2000,
+  //       position: "top",
+  //     });
 
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    } else {
-      toast({
-        description: "Incorrect OTP",
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-        position: "top",
-      });
-    }
-  };
+  //     setTimeout(() => {
+  //       navigate("/");
+  //     }, 2000);
+  //   } else {
+  //     toast({
+  //       description: "Incorrect OTP",
+  //       status: "error",
+  //       duration: 1000,
+  //       isClosable: true,
+  //       position: "top",
+  //     });
+  //   }
+  // };
 
   return (
     <Box>
@@ -177,8 +179,8 @@ function Payment() {
               <RadioGroup
                 // border="1px solid black"
                 width={{ base: "100%", sm: "100%", md: "100%", lg: "40%" }}
-                onChange={handlePaymentOptionChange}
-                value={paymentOption}
+                // onChange={handlePaymentOptionChange}
+                // value={paymentOption}
               >
                 <Stack spacing={2}>
                   <Radio colorScheme="yellow" value="debit-card">
@@ -204,7 +206,8 @@ function Payment() {
                 </Stack>
               </RadioGroup>
 
-              {paymentOption === "debit-card" && (
+              {/* {paymentOption === "debit-card" && ( */}
+              {"debit-card" === "debit-card" && (
                 <Box
                   // border="1px solid black"
                   width={{ base: "100%", sm: "100%", md: "100%", lg: "60%" }}
@@ -217,8 +220,8 @@ function Payment() {
                         type="number"
                         _focus={{ border: "1px solid #cea464" }}
                         placeholder="Enter card number"
-                        value={data.cardno}
-                        onChange={handleChange}
+                        // value={data.cardno}
+                        // onChange={handleChange}
                         name="cardno"
                       />
                     </FormControl>
@@ -228,8 +231,8 @@ function Payment() {
                         type="month"
                         _focus={{ border: "1px solid #cea464" }}
                         placeholder="MM/YY"
-                        value={data.ExpiringDate}
-                        onChange={handleChange}
+                        // value={data.ExpiringDate}
+                        // onChange={handleChange}
                         name="ExpiringDate"
                       />
                     </FormControl>
@@ -239,8 +242,8 @@ function Payment() {
                         type="password"
                         _focus={{ border: "1px solid #cea464" }}
                         placeholder="Enter CVV"
-                        value={data.cvv}
-                        onChange={handleChange}
+                        // value={data.cvv}
+                        // onChange={handleChange}
                         name="cvv"
                       />
                     </FormControl>
@@ -255,18 +258,18 @@ function Payment() {
                         lg: "20px",
                       }}
                       margin=" 10px auto"
-                      onClick={handlePaymentSubmit}
+                      // onClick={handlePaymentSubmit}
                     >
                       Get Otp
                     </Button>
-
-                    {carddetails !== "" ? (
+                    {/* {carddetails !== "" ? ( */}
+                    {true ? (
                       <FormControl>
                         <Input
                           type="number"
                           placeholder="Enter your Otp"
-                          value={enteredotp}
-                          onChange={(e) => setEnteredOtp(e.target.value)}
+                          // value={enteredotp}
+                          // onChange={(e) => setEnteredOtp(e.target.value)}
                         />
                         <Button
                           bgColor="#df9018"
@@ -279,7 +282,7 @@ function Payment() {
                             lg: "20px",
                           }}
                           margin=" 10px auto"
-                          onClick={handlePay}
+                          // onClick={handlePay}
                         >
                           {" "}
                           Pay{" "}
@@ -291,7 +294,9 @@ function Payment() {
                   </Box>
                 </Box>
               )}
-              {paymentOption === "upi" && (
+              {/* {paymentOption === "upi" && ( */}
+
+              {"upi" === "upi" && (
                 <Box
                   // border="1px solid black"
                   width={{ base: "100%", sm: "100%", md: "100%", lg: "60%" }}
@@ -317,14 +322,16 @@ function Payment() {
                         lg: "20px",
                       }}
                       margin=" 10px auto"
-                      onClick={handlePaymentSubmit}
+                      // onClick={handlePaymentSubmit}
                     >
                       Pay Now
                     </Button>
                   </Box>
                 </Box>
               )}
-              {paymentOption === "netbanking" && (
+              {/* {paymentOption === "netbanking" && ( */}
+
+              {"netbanking" === "netbanking" && (
                 <Box
                   // border="1px solid black"
                   width={{ base: "100%", sm: "100%", md: "100%", lg: "60%" }}
@@ -353,14 +360,16 @@ function Payment() {
                         lg: "20px",
                       }}
                       margin=" 10px auto"
-                      onClick={handlePaymentSubmit}
+                      // onClick={handlePaymentSubmit}
                     >
                       Pay Now
                     </Button>
                   </Box>
                 </Box>
               )}
-              {paymentOption === "cash" && (
+
+              {/* {paymentOption === "cash" && ( */}
+              { "cash" === "cash" && (
                 <Box
                   //  border="1px solid black"
                   width={{ base: "100%", sm: "100%", md: "100%", lg: "60%" }}
@@ -388,7 +397,7 @@ function Payment() {
                         lg: "20px",
                       }}
                       margin=" 10px auto"
-                      onClick={handlePaymentSubmit}
+                      // onClick={handlePaymentSubmit}
                     >
                       Place Order
                     </Button>
@@ -461,7 +470,7 @@ function Payment() {
                   }}
                   fontWeight="bold"
                 >
-                  ${getTotalPrice() - saved} /-
+                  {/* ${getTotalPrice() - saved} /- */}
                 </Text>
               </Flex>
 
@@ -514,7 +523,7 @@ function Payment() {
                   }}
                   fontWeight="bold"
                 >
-                  ${getTotalPrice() - saved} /-
+                  {/* ${getTotalPrice() - saved} /- */}
                 </Text>
               </Flex>
             </Box>
@@ -523,7 +532,7 @@ function Payment() {
                 Order Summary
               </Text>
 
-              {cartItems.map((item) => {
+              {/* {cartItems.map((item) => {
                 return (
                   <Flex
                     flexDir={{
@@ -586,7 +595,7 @@ function Payment() {
                     </Box>
                   </Flex>
                 );
-              })}
+              })} */}
             </Box>
           </Box>
         </Flex>

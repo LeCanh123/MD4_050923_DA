@@ -17,6 +17,9 @@ import Footer from "../Components/Home/Footer";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { getcart1 } from "../redux/cartReducer/reducer";
+import userPurchase from "@/apis/userPurchase";
+
 const initialState = {
   name: "",
   mobile: "",
@@ -30,25 +33,20 @@ function Checkout() {
   const navigate = useNavigate();
   let saved = 0;
 
-  const { cartItems } = useSelector((store) => store.cartReducer);
-  cartItems.forEach((item) => {
-    saved =
-      saved +
-      (Math.floor(item.price) -
-        Math.floor(item.price - (10 * item.price) / 100)) *
-        item.quantity;
-  });
+
 
   const [address, setAddress] = useState(initialState);
+  console.log("addressaddress",address);
+  
   const [storeADD, setStoreADD] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const name = e.target.name;
     const value = e.target.value;
     setAddress((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:any) => {
     event.preventDefault();
     if (
       address.name === "" ||
@@ -70,9 +68,49 @@ function Checkout() {
     }
   };
 
+  // const getTotalPrice = () => {
+  //   return cartItems.reduce((total, e) => total + e.price * e.quantity, 0);
+  // };
+
+  //new
+  const { cartItems } = useSelector((store:any) => {
+    return store.cartReducer;
+  });
+  console.log(cartItems);
+
   const getTotalPrice = () => {
-    return cartItems.reduce((total, e) => total + e.price * e.quantity, 0);
+    return cartItems.reduce((total:any, e:any) => {
+      return total + e.products.price * e.quantity}, 0);
   };
+
+  async function createOrder(){
+  let purchaseResult= await userPurchase.createOrder(localStorage.getItem("loginToken1") ,storeADD) ;
+  console.log("purchaseResultpurchaseResult",purchaseResult);
+  if(purchaseResult.data?.status){
+    toast({
+      title: "Success",
+      description: purchaseResult.data.message,
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+     // navigate("/payment");
+  }else{
+    toast({
+      title: "Err",
+      description: purchaseResult.data.message,
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+
+
+
+  }
+
 
   return (
     <Box>
@@ -329,7 +367,8 @@ function Checkout() {
                       }}
                       marginTop="20px"
                       onClick={() => {
-                        navigate("/payment");
+                        // navigate("/payment");
+                        createOrder();
                       }}
                     >
                       Proceed to Payment
@@ -387,7 +426,7 @@ function Checkout() {
                     }}
                     fontWeight="bold"
                   >
-                    ${getTotalPrice() - saved} /-
+                    ${getTotalPrice()}
                   </Text>
                 </Flex>
 
@@ -440,7 +479,7 @@ function Checkout() {
                     }}
                     fontWeight="bold"
                   >
-                    ${getTotalPrice() - saved} /-
+                    ${getTotalPrice()}
                   </Text>
                 </Flex>
               </Box>
@@ -449,7 +488,7 @@ function Checkout() {
                   Order Summary
                 </Text>
 
-                {cartItems.map((item) => {
+                {cartItems.map((item:any) => {
                   return (
                     <Flex
                       flexDir={{
@@ -464,7 +503,7 @@ function Checkout() {
                       mb="10px"
                     >
                       <Box>
-                        <Image width="70px" height="100px" src={item.image} />
+                        <Image width="70px" height="100px" src={item.products?.productimage[0]?.image} />
                       </Box>
                       <Box>
                         <Text
@@ -476,7 +515,7 @@ function Checkout() {
                             lg: "16px",
                           }}
                         >
-                          {item.title}
+                          {item.products?.title}
                         </Text>
                         <Text
                           fontWeight={"bold"}
@@ -487,7 +526,7 @@ function Checkout() {
                             lg: "16px",
                           }}
                         >
-                          ${item.price}/-
+                          ${item.products?.price}
                         </Text>
                         <Text
                           fontSize={{

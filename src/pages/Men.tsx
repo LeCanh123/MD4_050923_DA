@@ -18,6 +18,7 @@ import apis from "../apis";
 
 //lấy data men
 import { fetchMensData,getCategory,sortbyprice,getProductByCategory } from "../redux/MenReducer/reducer";
+import { getcart1 } from "../redux/cartReducer/reducer";
 
 export const Men = () => {
 
@@ -45,6 +46,7 @@ export const Men = () => {
   const dispatch = useDispatch();
   useEffect(()=> {
     let menproduct=fetchMensData("",dispatch);
+    getcart1(localStorage.getItem("loginToken1"),dispatch);
   }, []);
 
   const { men } = useSelector((store:any) => {

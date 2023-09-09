@@ -23,11 +23,9 @@ import apis from "../apis";
 import { getcart } from "../redux/cartReducer/reducer";
 import userCart from "@/apis/userCart";
 
-
 //redux
 import { getcart1 } from "../redux/cartReducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
-
 //loading
 import Loading from "@loading/Loading"
 
@@ -41,6 +39,7 @@ import Loading from "@loading/Loading"
 
 
 export const Cart = () => {
+  const navigate = useNavigate();
   let [isLoading,setIsLoading]=useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
@@ -188,7 +187,6 @@ export const Cart = () => {
   console.log(cartItems);
 
   const getTotalPrice = () => {
-    
     return cartItems.reduce((total:any, e:any) => {
     console.log(e.quantity);
       return total + e.products.price * e.quantity}, 0);
@@ -341,12 +339,12 @@ let saved:any =0;
                       </Td>
                       <Td>
                         <Text>Original Price</Text>
-                        {/* <span textDecoration={"line-through"}>
-                          $ {Math.floor(e.product.price)}
-                        </span> */}
+                        <span style={{textDecoration:"line-through"}}>
+                          $ {Math.floor(e.products.actualprice)}
+                        </span>
                         <br></br>
                         <Text>Discounted Price</Text>
-                        $ {Math.floor(e.products.actualprice - ( e.products.price))}
+                        $ {Math.floor(( e.products.price))}
                         <br></br>
                       </Td>
                       <Td>
@@ -371,8 +369,8 @@ let saved:any =0;
                       </Td>
                       <Td>
                         ${" "}
-                        {Math.floor(e.products.price - (10 * e.products.price) / 100) *
-                          e.quantity}
+                        {Math.floor(e.products.price*
+                          e.quantity)}
                       </Td>
                       <Td>
                         {/* <CloseIcon onClick={() => handleDelete(e.id)} /> */}
@@ -381,9 +379,8 @@ let saved:any =0;
                       <Td>
                         {" "}
                         ${" "}
-                        {Math.floor(
-                          e.products.price - Math.floor(e.products.price - (10 * e.products.price) / 100)
-                        ) * e.quantity}
+                        {Math.floor(e.products.actualprice - e.products.price)
+                         * e.quantity}
                       </Td>
                     </Tr>
                   );
@@ -411,7 +408,7 @@ let saved:any =0;
                 <Text>Delivery Charges</Text>
               </Box>
               <Box>
-                <Text>$ {getTotalPrice() - saved}</Text>
+                <Text>$ {getTotalPrice()}</Text>
                 <Text>***</Text>
               </Box>
               <Box borderLeft={"1px solid #e8e8e8"} color="red" pl="2px">
@@ -438,7 +435,8 @@ let saved:any =0;
                 variant={"outline"}
                 onClick={() => {
                   if (cartItems.length !== 0) {
-                    window.location.href="http://localhost:3000/checkout";
+                    navigate('/checkout')
+                    // ;="http://localhost:5173/checkout";
                   } else {
                     // toast({
                     //   title: "Cart is Empty.",
