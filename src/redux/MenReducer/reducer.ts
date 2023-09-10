@@ -11,6 +11,8 @@ const menSlice = createSlice({
     women: [],
     men:[],
     category1:[],
+    search:[],
+    isSearch:false
   },
   reducers: {
     getMenRequestPending: (state) => {
@@ -18,17 +20,16 @@ const menSlice = createSlice({
       state.isError = false;
     },
 
-    getMenRequestSuccess: (state, { payload }) => {
+    getMenRequestSuccess: (state, { payload }) => {//v
       state.isLoading = false;
       state.isError = false;
       state.total = payload.data?.length;
       state.men = payload.data;
+      state.search=payload.data;
     },
-    getProductByCategorysl: (state, { payload }) => {
-      // state.isLoading = false;
-      // state.isError = false;
-      // state.total = payload.total;
+    getProductByCategorysl: (state, { payload }) => {//v
       state.men = payload;
+      state.search=payload
     },
     sortByPriceSuccess: (state, { payload }) => {
       if(payload.genderType=="men"){
@@ -39,10 +40,22 @@ const menSlice = createSlice({
         }
       }
     },
-    getCategoryRequestSuccess: (state, { payload }) => {
-      // state.isLoading = false;
-      // state.isError = false;
-      // state.total = payload.total;
+    searchProductsl: (state, { payload }) => {//v
+    //  console.log("searchProductsl",payload);
+    //  console.log("state.search",state.men);
+    //  let abc=payload.search.filter((e:any)=>{console.log(e.title.includes("1"));
+    //   return e.title?.include(payload.key)})
+    //   console.log("abc",abc);
+      if(payload.search=="true"){
+        state.men=state.search.filter((e:any)=>{console.log(e);
+          return e.title?.includes(payload.key)})
+      }else{
+        state.men=state.search
+      }
+
+     
+    },
+    getCategoryRequestSuccess: (state, { payload }) => {//v
       state.category1 = payload.men;
     },
 
@@ -62,6 +75,7 @@ const menSlice = createSlice({
 export const {
   getMenRequestPending,
   getMenRequestSuccess,
+  searchProductsl,
   sortByPriceSuccess,
   getProductByCategorysl,
   getMenRequestFailure,
@@ -131,6 +145,19 @@ export const sortbyprice =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
   }
 };
 sortbyprice1();
+}
+
+export const searchProduct =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
+  async function  searchproduct1() {
+  try {
+    
+    dispatch(searchProductsl(paramObj));
+    
+  } catch (error) {
+    dispatch(getMenRequestFailure());
+  }
+};
+searchproduct1();
 }
 
 

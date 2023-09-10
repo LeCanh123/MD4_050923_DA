@@ -57,7 +57,7 @@ export const Men = () => {
   });
 
 //phân trang
-  const itemsPerPage = 1;
+  const itemsPerPage = 2;
   const currentPage = parseInt(searchParams.get('page')) || 1;
   let getPaginatedProducts:any = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;

@@ -1,29 +1,16 @@
 import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { searchProduct } from "@/redux/MenReducer/reducer";
-
-
 
 function SearchBar() {
-  const dispatch = useDispatch();
   const [search1,setSearch1]=useState("");
 
-  const { search } = useSelector((store:any) => {
-    return store.MenReducer;
-  });
   const handleSearch=(e:any)=>{
-    console.log("search ",e);
-    if(e){
-      console.log("có");
-      let searchProductResult=searchProduct({key:e,search:"true"},dispatch);
-
-    }else{
-      let searchProductResult=searchProduct({key:e,search:"false"},dispatch);
-      
-    }
-    
+let blockItem=document.querySelectorAll(".product-card")
+blockItem.forEach((e1)=>{
+  console.log(e1);
+  e1.innerText.toLowerCase().indexOf(e.toLowerCase())!=-1?e1.classList.remove('hidden1'):e1.classList.add('hidden1')
+})
   }
   return (
     <Box borderRadius={"md"} pos="relative">

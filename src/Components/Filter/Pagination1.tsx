@@ -32,7 +32,6 @@ const Pagination1 = () => {
 
   const handlePage = (val:any) => {
     setPage((prev) => prev + val);
-    // window.location.href = `http://localhost:5173/men?page=${ page + val}`;
     navigate(`/men?page=${ page + val}`)
   };
 
@@ -56,7 +55,7 @@ const Pagination1 = () => {
           <span />
           <Button>{page}</Button> <span />
           <Button
-            isDisabled={page === Math.ceil(total / 1)}
+            isDisabled={page === Math.ceil(total / 2)}
             onClick={() => handlePage(+1)}
           >
             Next
