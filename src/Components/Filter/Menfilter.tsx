@@ -39,7 +39,10 @@ const Menfilter: React.FC<Props> = ({ type }) => {
   const initialCategory = searchParams.getAll("category");
   const [category, setCategory] = useState(initialCategory || []);
   
-  const [page, setPage] = useState(getCurrentPage(Number(searchParams.get("page"))));
+  // const [page, setPage] = useState(getCurrentPage(Number(searchParams.get("page"))));
+  // console.log("page mènfilter",page);
+  let page=searchParams.get("page")
+  
   const intialOrder = searchParams.get("order");
   const [order, setOrder] = useState(intialOrder || "");
 

@@ -2,35 +2,49 @@ import { Box, Button, Center } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 const Pagination1 = () => {
-  const { total } = useSelector((store) => {
+  const navigate = useNavigate();
+  const { total } = useSelector((store:any) => {
     return store.MenReducer;
   });
-  const getCurrentPage = (page) => {
+  const getCurrentPage = (page:any) => {
     page = Number(page);
 
-    if (typeof page !== "number" || page <= 0 || !page) {
+  if (typeof page !== "number" || page <= 0 || !page) {
       return 1;
     }
     return page;
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams]:any = useSearchParams();
   const [page, setPage] = useState(getCurrentPage(searchParams.get("page")));
 
-  const handlePage = (val) => {
+  const intialOrder = searchParams.get("order");
+  const [order, setOrder] = useState(intialOrder || "");
+
+  const initialCategory = searchParams.getAll("category");
+  const [category, setCategory] = useState(initialCategory || []);
+
+
+  const handlePage = (val:any) => {
     setPage((prev) => prev + val);
-    window.location.href = `http://localhost:3000/men?page=${ page + val}`;
+    // window.location.href = `http://localhost:5173/men?page=${ page + val}`;
+    navigate(`/men?page=${ page + val}`)
   };
 
   useEffect(() => {
     let params = {
+      order,
       page,
+      category,
     };
-    // page && (params.page = page);
+    order && (params.order = order);
     setSearchParams(params);
-  }, [page]);
+  }, [category, page, order]);
 
   return (
     <Box width={"80%"} margin="auto">
@@ -42,7 +56,7 @@ const Pagination1 = () => {
           <span />
           <Button>{page}</Button> <span />
           <Button
-            isDisabled={page === Math.ceil(total / 12)}
+            isDisabled={page === Math.ceil(total / 1)}
             onClick={() => handlePage(+1)}
           >
             Next

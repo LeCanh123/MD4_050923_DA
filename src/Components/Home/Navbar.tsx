@@ -135,7 +135,7 @@ const Navbar = () => {
                   {/* <MenuItem>My Address</MenuItem> */}
                   <MenuItem>Payments</MenuItem>
                   <MenuItem>Reviews</MenuItem>
-                  <MenuItem onClick={() => window.location.href="/adminLogin"}>
+                  <MenuItem onClick={() =>  navigate("/adminLogin")}>
                     Admin
                   </MenuItem>
                 </MenuGroup>

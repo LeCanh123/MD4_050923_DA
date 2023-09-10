@@ -10,7 +10,7 @@ const menSlice = createSlice({
     total: 0,
     women: [],
     men:[],
-    category1:[]
+    category1:[],
   },
   reducers: {
     getMenRequestPending: (state) => {
@@ -21,7 +21,7 @@ const menSlice = createSlice({
     getMenRequestSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.isError = false;
-      state.total = payload.total;
+      state.total = payload.data?.length;
       state.men = payload.data;
     },
     getProductByCategorysl: (state, { payload }) => {
@@ -75,6 +75,8 @@ export const fetchMensData =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
   // dispatch(getMenRequestPending());
   try {
     const res = await userProduct.getMenproduct("");
+    console.log("fetchMensData",res.data);
+    
     dispatch(getMenRequestSuccess(res));
     
   } catch (error) {
@@ -87,11 +89,11 @@ fetchmen1();
 
 
 export const getProductByCategory =(paramObj: any, dispatch: Dispatch<AnyAction>) => {
-  async function  fetchmen1() {
+  async function  getProductByCategory1() {
   // dispatch(getMenRequestPending());
   try {
     const res = await userProduct.getProductByCategory(paramObj.token,paramObj.listCategory);
-    console.log(res.data.data);
+    console.log("getProductByCategory",res.data.data);
     
     dispatch(getProductByCategorysl(res.data.data));
     
@@ -99,7 +101,7 @@ export const getProductByCategory =(paramObj: any, dispatch: Dispatch<AnyAction>
     dispatch(getMenRequestFailure());
   }
 };
-fetchmen1();
+getProductByCategory1();
 }
 
 export const getCategory =(paramObj: any, dispatch: Dispatch<AnyAction>) => {

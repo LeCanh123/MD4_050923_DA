@@ -26,18 +26,22 @@ export const Men = () => {
   const [searchParams, setSearchParams]:any = useSearchParams();
   const intialOrder = searchParams.get("order");
   const initialCategory = searchParams.getAll("category");
+  const intialPage = searchParams.get("page");
+  console.log(intialPage);
+  
+
   
   useEffect(()=> {
-
     let sortProduct=sortbyprice({genderType:"men",sortType:intialOrder},dispatch);
     let getcategory1:any=getCategory({token:localStorage.getItem("loginToken1")},dispatch)
     if(initialCategory.length!=0){
       let getProductByCategory2=getProductByCategory({token:localStorage.getItem("loginToken1"),
         listCategory:initialCategory
         },dispatch)
+    }else{
+      // let menproduct=fetchMensData("",dispatch);
     }
   }, [searchParams]);
-
 
 
 
@@ -48,11 +52,25 @@ export const Men = () => {
     let menproduct=fetchMensData("",dispatch);
     getcart1(localStorage.getItem("loginToken1"),dispatch);
   }, []);
-
   const { men } = useSelector((store:any) => {
     return store.MenReducer;
   });
-let getPaginatedProducts =men
+
+//phân trang
+  const itemsPerPage = 1;
+  const currentPage = parseInt(searchParams.get('page')) || 1;
+  let getPaginatedProducts:any = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+  return men.slice(startIndex, endIndex);
+  }
+
+  
+
+
+
+
+// let getPaginatedProducts =men
   return (
     <div>
       <Navbar />
@@ -111,7 +129,7 @@ let getPaginatedProducts =men
             })} */}
 
                   {
-            getPaginatedProducts.map((el: any) => {
+            getPaginatedProducts().map((el: any) => {
               return <Card data={el} canh={"002"}/>;
             })
             
