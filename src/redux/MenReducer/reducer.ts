@@ -41,19 +41,12 @@ const menSlice = createSlice({
       }
     },
     searchProductsl: (state, { payload }) => {//v
-    //  console.log("searchProductsl",payload);
-    //  console.log("state.search",state.men);
-    //  let abc=payload.search.filter((e:any)=>{console.log(e.title.includes("1"));
-    //   return e.title?.include(payload.key)})
-    //   console.log("abc",abc);
       if(payload.search=="true"){
         state.men=state.search.filter((e:any)=>{console.log(e);
           return e.title?.includes(payload.key)})
       }else{
         state.men=state.search
-      }
-
-     
+      }     
     },
     getCategoryRequestSuccess: (state, { payload }) => {//v
       state.category1 = payload.men;

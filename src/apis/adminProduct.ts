@@ -52,7 +52,7 @@ export default {
             }}
         }
         );
-  },
+      },
   //product
   addProduct:(data:any)=> {
         console.log("data",data);
@@ -70,6 +70,22 @@ export default {
           }
             );
       },
+  getProduct:(token:any,data:any)=> {
+      console.log("data",data);
+      return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/adminproduct/getproduct`,{token,data})
+        .then(res => {
+          return res
+        })
+        .catch(error => 
+          {
+            // console.log(error)
+            return {data:{
+              status:false,
+              message:"Lỗi hệ thống"
+            }}
+        }
+          );
+      },
   productGetCategory:(token:any)=> {
     // console.log("newUser",token);
     return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/adminproduct/productgetcategory`,{token})
@@ -86,5 +102,5 @@ export default {
           }}
       }
         );
-  },
+      },
     }

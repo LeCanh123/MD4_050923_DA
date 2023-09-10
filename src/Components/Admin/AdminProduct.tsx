@@ -19,58 +19,78 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 import AdminNavbar from "./AdminNavbar";
-import apis from "../../apis";
+import adminProduct from "@/apis/adminProduct";
 
 
 
-function AdminProduct() {
+function AdminProduct1() {
   const [men, setMen] = useState([]);
-  
-  const [category, setCatergory] = useState("admingetmen");
-  console.log(category);
   const toast = useToast();
 
-  const getData = async (value) => {
-    let getproduct= await apis.admingetmen(`${value}`)
-    console.log(getproduct.data);
-    setMen(getproduct.data)
-  };
-
-  useEffect(async() => {
-let getproduct= await apis.admingetmen(`${category}`)
-console.log(getproduct.data);
-setMen(getproduct.data)
+  
+async function getData(e:any){
+  let getMenProductResult=await adminProduct.getProduct(localStorage.getItem("loginToken1"),{type:e})
+  console.log("getMenProductResult1",getMenProductResult);
+}
 
 
-  }, []);
-
-  const handleDelete = async(admintoken,id) => {
-let admindeleteproduct= await apis.admindeleteproduct(
-  admintoken,id
-)
-if(admindeleteproduct.status==200){
-  let result=men.filter((el)=>el.id!=id)
-  setMen(result)
-          toast({
-          title: "Product remove successfully.",
-          description: "",
+  useEffect(() => {
+    async function getMenProduct(){
+      let getMenProductResult= await adminProduct.getProduct(localStorage.getItem("loginToken1"),{type:"men"})
+      console.log("getMenProductResult",getMenProductResult);
+      if(getMenProductResult.data?.status){
+        toast({
+          title: "Success",
+          description: getMenProductResult.data.message,
           status: "success",
           duration: 2000,
           isClosable: true,
           position: "top",
         });
-}else{
-          toast({
-          title: "Lỗi hệ thống",
-          description: "err",
+        setMen(getMenProductResult.data.data)
+      }else{
+        toast({
+          title: "Err",
+          description: getMenProductResult.data.message,
           status: "error",
           duration: 2000,
           isClosable: true,
           position: "top",
         });
-}
+      }
+    }
+    getMenProduct()
 
-  };
+
+  }, []);
+
+//   const handleDelete = async(admintoken:any,id:any) => {
+// let admindeleteproduct:any= await apis.admindeleteproduct(
+//   admintoken,id
+// )
+// if(admindeleteproduct.status==200){
+//   let result=men.filter((el:any)=>el.id!=id)
+//   setMen(result)
+//           toast({
+//           title: "Product remove successfully.",
+//           description: "",
+//           status: "success",
+//           duration: 2000,
+//           isClosable: true,
+//           position: "top",
+//         });
+// }else{
+//           toast({
+//           title: "Lỗi hệ thống",
+//           description: "err",
+//           status: "error",
+//           duration: 2000,
+//           isClosable: true,
+//           position: "top",
+//         });
+// }
+
+//   };
 
   return (
     <>
@@ -79,7 +99,7 @@ if(admindeleteproduct.status==200){
       <Select
         onChange={(e) => {
           getData(e.target.value)
-          setCatergory(e.target.value);
+          // setCatergory(e.target.value);
          
 
         }}
@@ -93,8 +113,8 @@ if(admindeleteproduct.status==200){
         gap={"20px"}
         bg={"#f7f8f7"}
       >
-        <option value="admingetmen">Men</option>
-        <option value="admingetwomen">Women</option>
+        <option value="men">Men</option>
+        <option value="women">Women</option>
     
       </Select>
 
@@ -111,12 +131,12 @@ if(admindeleteproduct.status==200){
         gridTemplateColumns={"repeat(3,1fr)"}
       >
         {men.length > 0 &&
-          men.map((el) => {
+          men.map((el:any) => {
             return (
               <Card maxW="sm" key={el.id}>
                 <CardBody>
                   <Image
-                    src={el.image}
+                    src={el.productimage[0]?.image}
                     alt="Green double couch with wooden legs"
                     borderRadius="lg"
                   />
@@ -131,12 +151,12 @@ if(admindeleteproduct.status==200){
                 <Divider />
                 <CardFooter>
                   <ButtonGroup spacing="2">
-                    <a href={`/editProduct/${el.id}`}>
+                    <Link to={`/editProduct/${el.id}`}>
                       <Button colorScheme="blue">Edit Product</Button>
-                    </a>
+                    </Link>
 
                     <Button
-                      onClick={() => handleDelete(localStorage.getItem("loginToken1"),el.id)}
+                      // onClick={() => handleDelete(localStorage.getItem("loginToken1"),el.id)}
                       colorScheme="blue"
                     >
                       Delete
@@ -151,4 +171,4 @@ if(admindeleteproduct.status==200){
   );
 }
 
-export default AdminProduct;
+export default AdminProduct1;

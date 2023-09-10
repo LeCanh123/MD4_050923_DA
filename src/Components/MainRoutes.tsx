@@ -44,7 +44,7 @@ function MainRoutes() {
       />
       <Route path="/payment" element={<Payment />} />
       <Route path="/cart" element={<Cart />} />
-      {/* <Route path="/products" element={<AdminProduct />}></Route> */}
+      <Route path="/products" element={<AdminProduct />}></Route>
       <Route path="/manageProduct" element={<AdminManageProduct />}></Route>
       {/* <Route path="/editProduct/:id" element={<AdminEdit />}></Route>
       <Route path="/users" element={<ManageUsers />}></Route>
