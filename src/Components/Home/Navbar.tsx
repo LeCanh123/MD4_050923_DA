@@ -140,25 +140,7 @@ const Navbar = () => {
                   </MenuItem>
                 </MenuGroup>
 
-                {true === true ? (
-                  <MenuItem
-                    _hover={{ backgroundColor: "pink" }}
-                    backgroundColor="#fdb852"
-                    // onClick={() => {
-                    //   dispatch(signOut());
-                    //   toast({
-                    //     title: "User Logout Successfully.",
-                    //     description: "Come Back Again Soon",
-                    //     status: "success",
-                    //     duration: 2000,
-                    //     isClosable: true,
-                    //     position: "top",
-                    //   });
-                    // }}
-                  >
-                    Sign Out
-                  </MenuItem>
-                ) : (
+                {(
                   window.localStorage.getItem("loginToken1")?
                   <MenuItem
                     _hover={{ backgroundColor: "pink" }}
@@ -166,7 +148,7 @@ const Navbar = () => {
                     onClick={() => {
                       localStorage.removeItem("loginToken1");
                       localStorage.removeItem("loginName1");
-                      window.location.href="/";
+                      navigate("/");
                     }}
                   >
                     Logout
@@ -175,7 +157,7 @@ const Navbar = () => {
                                     _hover={{ backgroundColor: "pink" }}
                                     backgroundColor="#fdb852"
                                     onClick={() => {
-                                      window.location.href="/signup";
+                                      navigate("/signup");
                                     }}
                                   >
                                     Sign Up

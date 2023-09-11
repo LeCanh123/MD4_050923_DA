@@ -30,7 +30,26 @@ function AdminProduct1() {
   
 async function getData(e:any){
   let getMenProductResult=await adminProduct.getProduct(localStorage.getItem("loginToken1"),{type:e})
-  console.log("getMenProductResult1",getMenProductResult);
+  if(getMenProductResult.data?.status){
+    // toast({
+    //   title: "Success",
+    //   description: getMenProductResult.data.message,
+    //   status: "success",
+    //   duration: 2000,
+    //   isClosable: true,
+    //   position: "top",
+    // });
+    setMen(getMenProductResult.data.data)
+  }else{
+    toast({
+      title: "Err",
+      description: getMenProductResult.data.message,
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+  }
 }
 
 
@@ -39,14 +58,14 @@ async function getData(e:any){
       let getMenProductResult= await adminProduct.getProduct(localStorage.getItem("loginToken1"),{type:"men"})
       console.log("getMenProductResult",getMenProductResult);
       if(getMenProductResult.data?.status){
-        toast({
-          title: "Success",
-          description: getMenProductResult.data.message,
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
+        // toast({
+        //   title: "Success",
+        //   description: getMenProductResult.data.message,
+        //   status: "success",
+        //   duration: 2000,
+        //   isClosable: true,
+        //   position: "top",
+        // });
         setMen(getMenProductResult.data.data)
       }else{
         toast({
@@ -64,33 +83,31 @@ async function getData(e:any){
 
   }, []);
 
-//   const handleDelete = async(admintoken:any,id:any) => {
-// let admindeleteproduct:any= await apis.admindeleteproduct(
-//   admintoken,id
-// )
-// if(admindeleteproduct.status==200){
-//   let result=men.filter((el:any)=>el.id!=id)
-//   setMen(result)
-//           toast({
-//           title: "Product remove successfully.",
-//           description: "",
-//           status: "success",
-//           duration: 2000,
-//           isClosable: true,
-//           position: "top",
-//         });
-// }else{
-//           toast({
-//           title: "Lỗi hệ thống",
-//           description: "err",
-//           status: "error",
-//           duration: 2000,
-//           isClosable: true,
-//           position: "top",
-//         });
-// }
+  async function handleDelete(id:any){
+    let deleteProductResult=await adminProduct.deleteteProduct(localStorage.getItem("loginToken1"),id);
+    console.log("deleteProductResult",deleteProductResult);
+    if(deleteProductResult.data?.status){
+      toast({
+        title: "Success",
+        description: deleteProductResult.data.message,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      getData("men")
+    }else{
+      toast({
+        title: "Err",
+        description: deleteProductResult.data.message,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    }
 
-//   };
+  }
 
   return (
     <>
@@ -139,6 +156,7 @@ async function getData(e:any){
                     src={el.productimage[0]?.image}
                     alt="Green double couch with wooden legs"
                     borderRadius="lg"
+                    style={{width:"300px",height:"400px"}}
                   />
                   <Stack mt="6" spacing="3">
                     <Heading size="md">{el.title}</Heading>
@@ -156,7 +174,7 @@ async function getData(e:any){
                     </Link>
 
                     <Button
-                      // onClick={() => handleDelete(localStorage.getItem("loginToken1"),el.id)}
+                      onClick={() => handleDelete(el.id)}
                       colorScheme="blue"
                     >
                       Delete

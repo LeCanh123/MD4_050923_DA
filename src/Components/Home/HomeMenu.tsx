@@ -137,22 +137,22 @@ const HomeMenu = () => {
                                     <p className="category-heading">Sports  Wear</p>
 
                                     <li>
-                                        <Link>Tops / Tees</Link>
+                                        <Link to="#">Tops / Tees</Link>
                                     </li>
                                     <li>
-                                        <Link>Sports Bra</Link>
+                                        <Link to="#">Sports Bra</Link>
                                     </li>
                                     <li>
-                                        <Link>Leggings</Link>
+                                        <Link to="#">Leggings</Link>
                                     </li>
                                     <li>
-                                        <Link>Joggers / Tracks</Link>
+                                        <Link to="#">Joggers / Tracks</Link>
                                     </li>
                                     <li>
-                                        <Link>Sweatshirts</Link>
+                                        <Link to="#">Sweatshirts</Link>
                                     </li>
                                     <li>
-                                        <Link>Jackets</Link></li>
+                                        <Link to="#">Jackets</Link></li>
                                 </ul>
 
 
@@ -162,31 +162,31 @@ const HomeMenu = () => {
                                     <p className="category-heading">Top Brands</p>
 
                                     <li>
-                                        <Link>Melange</Link>
+                                        <Link to="#">Melange</Link>
                                     </li>
                                     <li>
-                                        <Link>Ginger</Link>
+                                        <Link to="#">Ginger</Link>
                                     </li>
                                     <li>
-                                        <Link>Code</Link>
+                                        <Link to="#">Code</Link>
                                     </li>
                                     <li>
-                                        <Link>Fame Forever</Link>
+                                        <Link to="#">Fame Forever</Link>
                                     </li>
                                     <li>
-                                        <Link>Kappa</Link>
+                                        <Link to="#">Kappa</Link>
                                     </li>
                                     <li>
-                                        <Link>Biba</Link>
+                                        <Link to="#">Biba</Link>
                                     </li>
                                     <li>
-                                        <Link>Aurelia</Link>
+                                        <Link to="#">Aurelia</Link>
                                     </li>
                                     <li>
-                                        <Link>AND</Link>
+                                        <Link to="#">AND</Link>
                                     </li>
                                     <li>
-                                        <Link>Allen Solly</Link>
+                                        <Link to="#">Allen Solly</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -377,16 +377,16 @@ const HomeMenu = () => {
                                     <p className="category-heading">Watches</p>
 
                                     <li>
-                                        <Link>Digital </Link>
+                                        <Link to="#">Digital </Link>
                                     </li>
                                     <li>
-                                        <Link>Analog </Link>
+                                        <Link to="#">Analog </Link>
                                     </li>
                                     <li>
-                                        <Link>Fitness</Link>
+                                        <Link to="#">Fitness</Link>
                                     </li>
                                     <li>
-                                        <Link>Smart </Link>
+                                        <Link to="#">Smart </Link>
                                     </li>
 
                                 </ul>
@@ -394,22 +394,22 @@ const HomeMenu = () => {
                                     <p className="category-heading">Sunglasses</p>
 
                                     <li>
-                                        <Link>Aviator </Link>
+                                        <Link to="#">Aviator </Link>
                                     </li>
                                     <li>
-                                        <Link>Wayfarer</Link>
+                                        <Link to="#">Wayfarer</Link>
                                     </li>
                                     <li>
-                                        <Link>Square</Link>
+                                        <Link to="#">Square</Link>
                                     </li>
                                     <li>
-                                        <Link>Sporty</Link>
+                                        <Link to="#">Sporty</Link>
                                     </li>
                                     <li>
-                                        <Link>Rectangle</Link>
+                                        <Link to="#">Rectangle</Link>
                                     </li>
                                     <li>
-                                        <Link>Round</Link>
+                                        <Link to="#">Round</Link>
                                     </li>
 
                                 </ul>
@@ -421,31 +421,31 @@ const HomeMenu = () => {
                                     <p className="category-heading">Shoes</p>
 
                                     <li>
-                                        <Link>Loafers</Link>
+                                        <Link to="#">Loafers</Link>
                                     </li>
                                     <li>
-                                        <Link>Slip-Ons</Link>
+                                        <Link to="#">Slip-Ons</Link>
                                     </li>
                                     <li>
-                                        <Link>Sports</Link>
+                                        <Link to="#">Sports</Link>
                                     </li>
                                     <li>
-                                        <Link>Lace up</Link>
+                                        <Link to="#">Lace up</Link>
                                     </li>
                                     <li>
-                                        <Link>Floaters</Link>
+                                        <Link to="#">Floaters</Link>
                                     </li>
                                     <li>
-                                        <Link>Sandals</Link>
+                                        <Link to="#">Sandals</Link>
                                     </li>
                                     <li>
-                                        <Link>Sneakers</Link>
+                                        <Link to="#">Sneakers</Link>
                                     </li>
                                     <li>
-                                        <Link>Boots</Link>
+                                        <Link to="#">Boots</Link>
                                     </li>
                                     <li>
-                                        <Link>slippers</Link>
+                                        <Link to="#">slippers</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -454,19 +454,19 @@ const HomeMenu = () => {
                                 <ul>
                                     <p className="category-heading"> Grooming</p>
                                     <li>
-                                        <Link>Fragrances</Link>
+                                        <Link to="#">Fragrances</Link>
                                     </li>
                                     <li>
-                                        <Link>Face-wash</Link>
+                                        <Link to="#">Face-wash</Link>
                                     </li>
                                     <li>
-                                        <Link>Skin care</Link>
+                                        <Link to="#">Skin care</Link>
                                     </li>
                                     <li>
-                                        <Link>Hair care</Link>
+                                        <Link to="#">Hair care</Link>
                                     </li>
                                     <li>
-                                        <Link>Beard care</Link>
+                                        <Link to="#">Beard care</Link>
                                     </li>
 
 
@@ -474,16 +474,16 @@ const HomeMenu = () => {
                                 <ul>
                                     <p className="category-heading">Add-ons</p>
                                     <li>
-                                        <Link>Wallets</Link>
+                                        <Link to="#">Wallets</Link>
                                     </li>
                                     <li>
-                                        <Link>Ties</Link>
+                                        <Link to="#">Ties</Link>
                                     </li>
                                     <li>
-                                        <Link>Belts</Link>
+                                        <Link to="#">Belts</Link>
                                     </li>
                                     <li>
-                                        <Link>Socks</Link>
+                                        <Link to="#">Socks</Link>
                                     </li>
 
 
@@ -648,16 +648,16 @@ const HomeMenu = () => {
                                     <p className="category-heading">Accessories</p>
 
                                     <li>
-                                        <Link>Face Masks</Link>
+                                        <Link to="#">Face Masks</Link>
                                     </li>
                                     <li>
-                                        <Link>Hair Accessories</Link>
+                                        <Link to="#">Hair Accessories</Link>
                                     </li>
                                     <li>
-                                        <Link>Caps</Link>
+                                        <Link to="#">Caps</Link>
                                     </li>
                                     <li>
-                                        <Link>Hats</Link>
+                                        <Link to="#">Hats</Link>
                                     </li>
 
                                 </ul>
@@ -666,22 +666,22 @@ const HomeMenu = () => {
                                     <p className="category-heading">Price point Store</p>
 
                                     <li>
-                                        <Link>Under 299</Link>
+                                        <Link to="#">Under 299</Link>
                                     </li>
                                     <li>
-                                        <Link>Under 399</Link>
+                                        <Link to="#">Under 399</Link>
                                     </li>
                                     <li>
-                                        <Link>Under 499</Link>
+                                        <Link to="#">Under 499</Link>
                                     </li>
                                     <li>
-                                        <Link>Under 599</Link>
+                                        <Link to="#">Under 599</Link>
                                     </li>
                                     <li>
-                                        <Link>Under 699</Link>
+                                        <Link to="#">Under 699</Link>
                                     </li>
                                     <li>
-                                        <Link>Under 799</Link>
+                                        <Link to="#">Under 799</Link>
                                     </li>
 
                                 </ul>
@@ -693,22 +693,22 @@ const HomeMenu = () => {
                                     <p className="category-heading">Age Store</p>
 
                                     <li>
-                                        <Link>0-2 yrs</Link>
+                                        <Link to="#">0-2 yrs</Link>
                                     </li>
                                     <li>
-                                        <Link>2-4 yrs</Link>
+                                        <Link to="#">2-4 yrs</Link>
                                     </li>
                                     <li>
-                                        <Link>4-6 yrs</Link>
+                                        <Link to="#">4-6 yrs</Link>
                                     </li>
                                     <li>
-                                        <Link>6-10 yrs</Link>
+                                        <Link to="#">6-10 yrs</Link>
                                     </li>
                                     <li>
-                                        <Link>10-13 yrs</Link>
+                                        <Link to="#">10-13 yrs</Link>
                                     </li>
                                     <li>
-                                        <Link>13-16 yrs</Link>
+                                        <Link to="#">13-16 yrs</Link>
                                     </li>
                                 </ul>
                                 <ul>
@@ -889,35 +889,35 @@ const HomeMenu = () => {
                                     <p className="category-heading">Women Accesories</p>
 
                                     <li>
-                                        <Link>Handbags </Link>
+                                        <Link to="#">Handbags </Link>
                                     </li>
                                     <li>
-                                        <Link>Backpack </Link>
+                                        <Link to="#">Backpack </Link>
                                     </li>
                                     <li>
-                                        <Link>Slings</Link>
+                                        <Link to="#">Slings</Link>
                                     </li>
                                     <li>
-                                        <Link>clutches </Link>
+                                        <Link to="#">clutches </Link>
                                     </li>
 
                                     <li>
-                                        <Link>Wallets</Link>
+                                        <Link to="#">Wallets</Link>
                                     </li>
                                     <li>
-                                        <Link>totes</Link>
+                                        <Link to="#">totes</Link>
                                     </li>
                                     <li>
-                                        <Link>Laptop Bags</Link>
+                                        <Link to="#">Laptop Bags</Link>
                                     </li>
                                     <li>
-                                        <Link>Pouch</Link>
+                                        <Link to="#">Pouch</Link>
                                     </li>
                                     <li>
-                                        <Link>Socks</Link>
+                                        <Link to="#">Socks</Link>
                                     </li>
                                     <li>
-                                        <Link>Fashion</Link>
+                                        <Link to="#">Fashion</Link>
                                     </li>
 
                                 </ul>
@@ -929,28 +929,28 @@ const HomeMenu = () => {
                                     <p className="category-heading">Men Accessories</p>
 
                                     <li>
-                                        <Link>Backpack</Link>
+                                        <Link to="#">Backpack</Link>
                                     </li>
                                     <li>
-                                        <Link>Wallets</Link>
+                                        <Link to="#">Wallets</Link>
                                     </li>
                                     <li>
-                                        <Link>Belts</Link>
+                                        <Link to="#">Belts</Link>
                                     </li>
                                     <li>
-                                        <Link>Masks</Link>
+                                        <Link to="#">Masks</Link>
                                     </li>
                                     <li>
-                                        <Link>Socks</Link>
+                                        <Link to="#">Socks</Link>
                                     </li>
 
                                     <ul>
                                         <p className="category-heading"> Essentials</p>
                                         <li>
-                                            <Link>Flip-flop</Link>
+                                            <Link to="#">Flip-flop</Link>
                                         </li>
                                         <li>
-                                            <Link>MultiUtility Bag</Link>
+                                            <Link to="#">MultiUtility Bag</Link>
                                         </li>
 
                                     </ul>
@@ -1117,19 +1117,19 @@ const HomeMenu = () => {
                                     <p className="category-heading">Bath & Body</p>
 
                                     <li>
-                                        <Link>Soaps </Link>
+                                        <Link to="#">Soaps </Link>
                                     </li>
                                     <li>
-                                        <Link>Gel </Link>
+                                        <Link to="#">Gel </Link>
                                     </li>
                                     <li>
-                                        <Link>Scrub</Link>
+                                        <Link to="#">Scrub</Link>
                                     </li>
                                     <li>
-                                        <Link>Wipes </Link>
+                                        <Link to="#">Wipes </Link>
                                     </li>
                                     <li>
-                                        <Link>Sanitisers </Link>
+                                        <Link to="#">Sanitisers </Link>
                                     </li>
 
                                 </ul>
@@ -1141,13 +1141,13 @@ const HomeMenu = () => {
                                     <p className="category-heading">Fragrances</p>
 
                                     <li>
-                                        <Link>Deodorants </Link>
+                                        <Link to="#">Deodorants </Link>
                                     </li>
                                     <li>
-                                        <Link>Perfumes</Link>
+                                        <Link to="#">Perfumes</Link>
                                     </li>
                                     <li>
-                                        <Link>Sets</Link>
+                                        <Link to="#">Sets</Link>
                                     </li>
 
 

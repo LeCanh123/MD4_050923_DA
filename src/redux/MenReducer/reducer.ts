@@ -43,7 +43,7 @@ const menSlice = createSlice({
     searchProductsl: (state, { payload }) => {//v
       if(payload.search=="true"){
         state.men=state.search.filter((e:any)=>{console.log(e);
-          return e.title?.includes(payload.key)})
+          return e.title?.toLowerCase().includes(payload.key.toLowerCase())})
       }else{
         state.men=state.search
       }     

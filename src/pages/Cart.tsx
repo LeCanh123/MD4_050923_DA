@@ -233,7 +233,7 @@ export const Cart = () => {
   }
 
   async function handleChangeQuantity(id:any,type:any){
-    setIsLoading(true)
+    // setIsLoading(true)
     let changeQuantityResult=await userCart.changeQuantity(localStorage.getItem("loginToken1"),id,type);
     if(changeQuantityResult.data?.status){
       toast({
@@ -245,7 +245,7 @@ export const Cart = () => {
         position: "top",
       });
       getcart1(localStorage.getItem("loginToken1"),dispatch);
-      setIsLoading(false)
+      // setIsLoading(false)
     }else{
       toast({
         title: "Err",

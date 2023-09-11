@@ -86,6 +86,21 @@ export default {
         }
           );
       },
+  deleteteProduct:(token:any,id:any)=> {
+    return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/adminproduct/deleteproduct`,{token,id})
+      .then(res => {
+        return res
+      })
+      .catch(error => 
+        {
+          // console.log(error)
+          return {data:{
+            status:false,
+            message:"Lỗi hệ thống"
+          }}
+      }
+        );
+    },
   productGetCategory:(token:any)=> {
     // console.log("newUser",token);
     return axios.post(import.meta.env.VITE_SERVER_HOST+`apis/v1/adminproduct/productgetcategory`,{token})

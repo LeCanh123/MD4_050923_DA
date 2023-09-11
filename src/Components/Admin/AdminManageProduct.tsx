@@ -251,14 +251,14 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
     
             <div  key={1} onClick={()=>changecomponent(1)} style={{backgroundColor:"red"}}>
               <li className="row" >
-                <div className="icon" style={{position:"relative",top:"0px"}}>{<MdOutlineProductionQuantityLimits />}</div>
+                <div className="icon" style={{position:"relative",top:"30px"}}>{<MdOutlineProductionQuantityLimits />}</div>
                 <div className="title" >{"Manage Category"}</div>
               </li>
             </div>
 
             <div  key={2} onClick={()=>changecomponent(2)}>
               <li className="row" >
-                <div className="icon" style={{position:"relative",top:"0px"}}>{<MdOutlineAddCircleOutline />}</div>
+                <div className="icon" style={{position:"relative",top:"30px"}}>{<MdOutlineAddCircleOutline />}</div>
                 <div className="title" onClick={()=>changecomponent(2)}>{"Add Product"}</div>
               </li>
             </div>

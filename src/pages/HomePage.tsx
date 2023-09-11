@@ -20,20 +20,35 @@ import NavbarTop from "../Components/Home/NavbarTop";
 //test checktoken
 import checkTokenLogin from "@/apis/checkTokenLogin";
 import { useState, useEffect } from "react";
+//redux
+import { getcart1 } from "../redux/cartReducer/reducer";
+import { useDispatch, useSelector } from "react-redux";
 
 function HomePage() {
+  const dispatch = useDispatch();
 
   useEffect(()=>{
-    async function checkToken1(){
-      let resultCheckLogintoken=await checkTokenLogin.userchecktoken(localStorage.getItem("loginToken1"))
-      // console.log();
+    // async function checkToken1(){
+    //   let resultCheckLogintoken=await checkTokenLogin.userchecktoken(localStorage.getItem("loginToken1"))
+    //   // console.log();
       
-    }
-    checkToken1();
+    // }
+    // checkToken1();
 
 
     
   },[])
+
+
+  useEffect(() => {
+    async function getCart(){
+      getcart1(localStorage.getItem("loginToken1"),dispatch);
+      if(localStorage.getItem("loginToken1")){
+        // setIsLogin(true);
+      }
+    }
+    getCart();
+  }, []);
 
   return (
     <Box bgColor={"#fdfdfd"}>
@@ -56,7 +71,7 @@ function HomePage() {
           position="absolute"
           top={{ base: "117px", sm: "115px", md: "142px", lg: "125px" }}
           left={{ base: "5%", sm: "27%", md: "30%", lg: "40%" }}
-          style={{paddingTop:"40px"}}
+          style={{paddingTop:"0px"}}
         >
           New arrivals in mens and womens wear upto 30% off ❤️
         </Text>
