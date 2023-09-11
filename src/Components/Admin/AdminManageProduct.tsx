@@ -94,18 +94,18 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
     const handleAddProduct =async (e:any) => {
       const fileimage:any = document.getElementById('image00');
       const image = fileimage.files[0];
-  //
-      const fileimage1:any = document.getElementById('img1');
-      const img1 = fileimage1.files[0];
-  //
-      const fileimage2:any = document.getElementById('img2');
-      const img2 = fileimage2.files[0];
-  //
-      const fileimage3:any = document.getElementById('img3');
-      const img3 = fileimage3.files[0];
-  //
-      const fileimage4:any = document.getElementById('img4');
-      const img4 = fileimage4.files[0];
+  // //
+  //     const fileimage1:any = document.getElementById('img1');
+  //     const img1 = fileimage1.files[0];
+  // //
+  //     const fileimage2:any = document.getElementById('img2');
+  //     const img2 = fileimage2.files[0];
+  // //
+  //     const fileimage3:any = document.getElementById('img3');
+  //     const img3 = fileimage3.files[0];
+  // //
+  //     const fileimage4:any = document.getElementById('img4');
+  //     const img4 = fileimage4.files[0];
   //
       const price: any = parseFloat((document.getElementById('price') as HTMLInputElement).value);
       const actualPrice: number = parseFloat((document.getElementById('actualPrice') as HTMLInputElement).value);
@@ -115,10 +115,10 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
       
       const formData:any = new FormData();
       formData.append('image', image);
-      formData.append('img1', img1);
-      formData.append('img2', img2);
-      formData.append('img3', img3);
-      formData.append('img4', img4);
+      // formData.append('img1', img1);
+      // formData.append('img2', img2);
+      // formData.append('img3', img3);
+      // formData.append('img4', img4);
       formData.append('price', price);
       formData.append('actualprice', actualPrice);
       formData.append('title', title);
@@ -391,29 +391,29 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
               type="file"
               id="image00"
             />
-            <FormLabel mt={"12px"}>Image1</FormLabel>
+            {/* <FormLabel mt={"12px"}>Image1</FormLabel>
             <Input
               type="file"
               id="img1"
-            />
+            /> */}
     
-            <FormLabel mt={"12px"}>Image2</FormLabel>
+            {/* <FormLabel mt={"12px"}>Image2</FormLabel>
             <Input
               type="file"
               id="img2"
-            />
+            /> */}
     
-            <FormLabel mt={"12px"}>Image3</FormLabel>
+            {/* <FormLabel mt={"12px"}>Image3</FormLabel>
             <Input
                 type="file"
                 id="img3"
-            />
+            /> */}
     
-            <FormLabel mt={"12px"}>Image4</FormLabel>
+            {/* <FormLabel mt={"12px"}>Image4</FormLabel>
             <Input
                   type="file"
                   id="img4"
-            />
+            /> */}
     
             <FormLabel mt={"12px"}>Price</FormLabel>
             <Input

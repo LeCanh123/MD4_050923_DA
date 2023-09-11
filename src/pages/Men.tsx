@@ -11,8 +11,7 @@ import Pagination1 from "../Components/Filter/Pagination1";
 import Navbar from "../Components/Home/Navbar";
 import Footer from "../Components/Home/Footer";
 import Menfilter from "../Components/Filter/Menfilter";
-import { getMenRequestSuccess } from "../redux/MenReducer/reducer";
-import apis from "../apis";
+
 
 
 
@@ -57,7 +56,7 @@ export const Men = () => {
   });
 
 //phân trang
-  const itemsPerPage = 2;
+  const itemsPerPage = 8;
   const currentPage = parseInt(searchParams.get('page')) || 1;
   let getPaginatedProducts:any = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;

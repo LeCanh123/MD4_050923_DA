@@ -55,7 +55,7 @@ const Pagination1 = () => {
           <span />
           <Button>{page}</Button> <span />
           <Button
-            isDisabled={page === Math.ceil(total / 2)}
+            isDisabled={page === Math.ceil(total / 8)}
             onClick={() => handlePage(+1)}
           >
             Next

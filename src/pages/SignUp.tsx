@@ -163,17 +163,6 @@ export default function Signup() {
   
   }
 
-//   useEffect(() => {
-//     axios
-
-//       .get(process.env.REACT_APP_HOST+"registeredUser")
-//       .then((response) => {
-//         setUserObj(response.data);
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });
-//   }, []);
 
   return (
     !isLoading?
