@@ -95,7 +95,7 @@ function Checkout() {
       isClosable: true,
       position: "top",
     });
-     // navigate("/payment");
+     navigate("/history");
   }else{
     toast({
       title: "Err",

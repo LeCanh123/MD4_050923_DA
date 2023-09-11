@@ -19,7 +19,7 @@ import Admin from "../pages/Admin";
 import PrivateRoutes from "./PrivateRoutes";
 import UserInfo from "../pages/UserInfo";
 import History from "@/pages/History";
-
+import ManageUserCart from "./Admin/ManageUsersCart";
 
 function MainRoutes() {
   return (
@@ -48,6 +48,7 @@ function MainRoutes() {
       <Route path="/manageProduct" element={<AdminManageProduct />}></Route>
       {/* <Route path="/editProduct/:id" element={<AdminEdit />}></Route> */}
       <Route path="/users" element={<ManageUsers />}></Route>
+      <Route path="/userscart" element={<ManageUserCart />}></Route>
       {/* <Route path="/adminLogin" element={<AdminLogin />}></Route> */}
       <Route path="/admin" element={<Admin />}></Route>
       <Route path="/userinfo" element={<UserInfo />}></Route>

@@ -94,7 +94,7 @@ import { getcart1 } from "../redux/cartReducer/reducer";
       textAlign="left"
       height={"450px"}
     >
-      <Link to={`/${"type"}/${props.data.id}`} >
+      {/* <Link to={`/${"type"}/${props.data.id}`} > */}
         <Image borderRadius={"20px"} style={{height:"300px",width:"250px",margin:"15px",marginLeft:"15%"}}  src={props.data?.productimage[0]?.image}></Image>
         <Flex gap={"5px"} textAlign={"center"}>
           <Heading paddingTop={"8px"} size="md">
@@ -107,7 +107,10 @@ import { getcart1 } from "../redux/cartReducer/reducer";
         <Text paddingTop={"3px"} fontSize={"14px"}>
           {props.data.title}{" "}
         </Text>
-      </Link>
+      {/* </Link> */}
+
+
+
       <Button className="add-to-cart-btn" onClick={()=>handleAddToCart(props.data.id)}>
         Add To Cart
       </Button>

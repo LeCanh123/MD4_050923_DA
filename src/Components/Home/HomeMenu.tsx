@@ -30,7 +30,7 @@ const HomeMenu = () => {
 
 
             >
-                <Link to="/women">Women</Link>
+                <Link to="#">Women</Link>
                 <Box
                     top="4rem"
                     className="drop-down-content"

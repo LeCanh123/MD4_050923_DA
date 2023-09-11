@@ -17,6 +17,8 @@ const sidebarData = [
     link: "/manageProduct",
   },
   { title: "Manage Users", icon: <BsGraphUpArrow />, link: "/users" },
+  { title: "Manage Users Cart", icon: <BsGraphUpArrow />, link: "/userscart" },
+
 ];
 
 function AdminSidebar() {

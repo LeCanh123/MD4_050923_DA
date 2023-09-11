@@ -13,14 +13,14 @@ export default function History() {
             let getHistoryResult= await userPurchase.getHistoryOrder(localStorage.getItem("loginToken1"));
             console.log("getHistoryResult",getHistoryResult);
             if(getHistoryResult.data?.status){
-                toast({
-                  title: "Success",
-                  description: getHistoryResult.data.message,
-                  status: "success",
-                  duration: 2000,
-                  isClosable: true,
-                  position: "top",
-                });
+                // toast({
+                //   title: "Success",
+                //   description: getHistoryResult.data.message,
+                //   status: "success",
+                //   duration: 2000,
+                //   isClosable: true,
+                //   position: "top",
+                // });
                 setPurchaHistory(getHistoryResult.data.data)
               }else{
                 toast({
