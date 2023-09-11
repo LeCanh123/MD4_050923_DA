@@ -169,9 +169,9 @@ async function getData(e:any){
                 <Divider />
                 <CardFooter>
                   <ButtonGroup spacing="2">
-                    <Link to={`/editProduct/${el.id}`}>
+                    {/* <Link to={`/editProduct/${el.id}`}>
                       <Button colorScheme="blue">Edit Product</Button>
-                    </Link>
+                    </Link> */}
 
                     <Button
                       onClick={() => handleDelete(el.id)}

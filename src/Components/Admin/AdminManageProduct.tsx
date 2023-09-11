@@ -42,7 +42,8 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
       //useeffect getcategory
       useEffect(() => {
           async function getCategory1(){
-          let listCategory1:any= await apiAdminProduct.getCategory("");
+          let listCategory1:any= await apiAdminProduct.getCategory(localStorage.getItem("loginToken1"));
+          
             if(listCategory1.status==true){
               setListCategory(listCategory1.data)
             }
@@ -54,7 +55,7 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
       let [listdeleteCategory,setdeleteListCategory]=useState([{sex:"Chưa có Danh Mục",id:-1,name:"Chưa có Danh Mục"}]);
       useEffect(() => {
         async function getCategory2(){
-          let listCategory1:any= await apiAdminProduct.getCategory("");
+          let listCategory1:any= await apiAdminProduct.getCategory(localStorage.getItem("loginToken1"));
             if(listCategory1.data?.status){
           setdeleteListCategory(listCategory1.data.data)
             }
@@ -68,7 +69,7 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
         setSelectedSex(event.target.value);};
       useEffect(() => {
         async function productGetCategory(){
-        let listCategory2:any= await apiAdminProduct.productGetCategory("");
+        let listCategory2:any= await apiAdminProduct.productGetCategory(localStorage.getItem("loginToken1"));
           if(listCategory2.status){
             setProductCategory1(listCategory2.data?.data)
           }
@@ -173,7 +174,7 @@ import { MdOutlineProductionQuantityLimits, MdOutlineAddCircleOutline } from "re
       const sex:any = (document.getElementById('categoryType1')as HTMLInputElement).value;
       const name:any = (document.getElementById('categoryName1')as HTMLInputElement).value;
       setIsLoading(true)
-      let addCategoryResult:any=await apiAdminProduct.addCategory({name,sex});
+      let addCategoryResult:any=await apiAdminProduct.addCategory(localStorage.getItem("loginToken1"),{name,sex});
       if(addCategoryResult.data?.status){
         setReloadCategory(Math.random()*1000);
         toast({

@@ -25,12 +25,13 @@ import functions from "../functions";
 import apis from "../apis";
 // import { SignUpFunc } from "../redux/authReducer/action";
 import { SignUpFunc } from "../redux/authReducer/reducer";
-
+import Loading from "@loading/Loading"
 
 
 
 import axios from "axios";
 export default function Signup() {
+  let [isLoading,setIsLoading]=useState(false);
   const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
   const [firstname, setfirstName] = useState("");
@@ -90,6 +91,7 @@ export default function Signup() {
   console.log(validateUserName);
   
   if(validateUserName.status&&validateFirstName.status&&validateLastName.status&&validateEmail.status&&validatePassword.status){
+    setIsLoading(true)
    let SignupRequest1:any = await apis.SignupRequest(newUser)
    //nếu đăng kí thành công
    if(SignupRequest1.status==true){
@@ -100,6 +102,7 @@ export default function Signup() {
       position: "top",
       isClosable: true,
     });
+    setIsLoading(false)
     //đăng nhập
     const handleSubmit = async(email:string,password:string) => {
       let loginUser={
@@ -142,6 +145,7 @@ export default function Signup() {
       position: "top",
       isClosable: true,
     });
+    setIsLoading(false)
     //nếu lỗi do mạng
    }else{
     toast({
@@ -151,8 +155,10 @@ export default function Signup() {
       position: "top",
       isClosable: true,
     });
+    setIsLoading(false)
    }
-console.log(SignupRequest1);
+
+    setIsLoading(false)
   }
   
   }
@@ -170,6 +176,7 @@ console.log(SignupRequest1);
 //   }, []);
 
   return (
+    !isLoading?
     <Box bg={useColorModeValue("gray.50", "gray.800")}>
       <Image
         width="300px"
@@ -295,5 +302,7 @@ console.log(SignupRequest1);
         </Stack>
       </Flex>
     </Box>
+    :
+    <Loading></Loading>
   );
 }

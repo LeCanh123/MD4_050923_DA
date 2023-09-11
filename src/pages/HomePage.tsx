@@ -27,17 +27,6 @@ import { useDispatch, useSelector } from "react-redux";
 function HomePage() {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    // async function checkToken1(){
-    //   let resultCheckLogintoken=await checkTokenLogin.userchecktoken(localStorage.getItem("loginToken1"))
-    //   // console.log();
-      
-    // }
-    // checkToken1();
-
-
-    
-  },[])
 
 
   useEffect(() => {

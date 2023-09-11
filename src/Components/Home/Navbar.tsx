@@ -22,48 +22,36 @@ import SearchBar from "./SearchBar";
 import SideBar from "./Sidebar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { signOut } from "../../redux/authReducer/reducer";
-import axios from "axios";
-// import { addToCart } from "../../redux/cartReducer/reducer";
-// import NavbarTop from "./NavbarTop";
-// import { addToCart1 } from "../../redux/cartReducer/reducer";
+import adminProduct from "@/apis/adminProduct";
+
 
 
 
 
 
 const Navbar = () => {
+  const toast = useToast();
   const { cartItems } = useSelector((store:any) => {
     return store.cartReducer;
   });
   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const toast = useToast();
-//   let { isAuth, afterLoginUser } = useSelector((state) => {
-//     return state.AuthReducer
-//   })
-//   const { cartItems } = useSelector((store) => store.cartReducer);
-// console.log("cartItemscartItems",cartItems.length);
-  
+  async function checkAdmin(){
+    let checkAdminLoginResult= await adminProduct.adminCheckLogin(localStorage.getItem("loginToken1"));
+    console.log("checkAdminLoginResult",checkAdminLoginResult);
+  if(checkAdminLoginResult.data?.status){
+    navigate("/admin")
+  }else{
+    toast({
+      title: "Err",
+      description: checkAdminLoginResult.data?.message,
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+}
 
-
-
-//   useEffect(() => {
-//     axios
-//       .get(process.env.REACT_APP_HOST+`cart1`)
-//       .then((res) => {
-//         // dispatch(addToCart(res.data));
-//         res.data.forEach((item)=>{
-//           if(item.id==afterLoginUser.email){
-//             dispatch(addToCart1())
-//           }
-//         })
-
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   }, [cartItems.length]);///////////////////////////////////////////////////cartItems
   return (
     <Box
       position={"sticky"}
@@ -135,7 +123,7 @@ const Navbar = () => {
                   {/* <MenuItem>My Address</MenuItem> */}
                   <MenuItem>Payments</MenuItem>
                   <MenuItem>Reviews</MenuItem>
-                  <MenuItem onClick={() =>  navigate("/adminLogin")}>
+                  <MenuItem onClick={() =>  checkAdmin()}>
                     Admin
                   </MenuItem>
                 </MenuGroup>
